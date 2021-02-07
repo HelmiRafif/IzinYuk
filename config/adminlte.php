@@ -264,7 +264,11 @@ return [
             ],
             [
                 'text' => 'Role',
-                'url' => '/role',
+                'route' => 'roles.index',
+            ],
+            [
+                'text' => 'Permission',
+                'route' => 'permissions.index',
             ],
             ],
         ],
