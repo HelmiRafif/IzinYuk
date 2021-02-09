@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
+use App\Http\Controllers\TunjanganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles',RoleController::class);
     Route::resource('permissions',PermissionController::class);
     Route::resource('users',UserController::class);
+    // Route::resource('pegawai',PegawaiController::class);
+    Route::resource('jabatan',JabatanController::class);
+    Route::resource('tunjangan',TunjanganController::class);
 
     Route::get('/dashboard', function(){
         return view('admin.dashboard');

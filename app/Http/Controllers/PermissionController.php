@@ -27,7 +27,7 @@ class PermissionController extends Controller
      */
     public function index(Request $request)
     {
-        $permissions = Permission::orderBy('id','DESC')->paginate(5);
+        $permissions = Permission::orderBy('id','DESC')->paginate(50);
         return view('admin.permission.index',compact('permissions'))
             ->with('i', ($request->input('page', 1) - 1) * 5);  
     }
@@ -57,11 +57,11 @@ class PermissionController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:permissions,name',
-            'permission' => 'required',
+            'guard_name' => 'required',
         ]);
-        Permission::create(['name' => $request->input('name'), 'guard_name' => $request->input('guard_name')]);
 
-        return redirect()->route('permission.index')->with('success','Permission created successfully');
+        Permission::create(['name' => $request->input('name'), 'guard_name' => $request->input('guard_name')]);
+        return redirect()->route('permissions.index')->with('success','Permission created successfully');
     }
 
     /**
@@ -81,8 +81,9 @@ class PermissionController extends Controller
      * @param  \App\Models\permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function edit(permission $permission)
+    public function edit($id)
     {
+        $permission = permission::find($id);
         return view('admin.permission.edit-permission',compact('permission'));
     }
 

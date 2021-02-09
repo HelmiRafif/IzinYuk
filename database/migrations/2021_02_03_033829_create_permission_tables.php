@@ -32,6 +32,8 @@ class CreatePermissionTables extends Migration
         Schema::create($tableNames['roles'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->unsignedBigInteger('role-id');
+            $table->foreign('role-id')->references('id')->on('users');
             $table->string('guard_name');
             $table->timestamps();
 
@@ -85,6 +87,23 @@ class CreatePermissionTables extends Migration
                 ->onDelete('cascade');
 
             $table->primary(['permission_id', 'role_id'], 'role_has_permissions_permission_id_role_id_primary');
+        });
+
+        Schema::create('user_has_role', function(Blueprint $table){
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('role_id');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('role_id')
+                ->references('id')
+                ->on('roles')
+                ->onDelete('cascade');
+
+            $table->primary(['user_id', 'role_id'], 'user_has_role_user_id_role_id');
         });
 
         app('cache')

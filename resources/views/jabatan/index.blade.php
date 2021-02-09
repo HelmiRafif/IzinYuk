@@ -15,11 +15,10 @@
 
 @section('content')
     @can('role-create')        
-        <a href="<?= route('roles.create') ?>" class="btn btn-app float-right">
+        <a href="<?= route('jabatan.create') ?>" class="btn btn-app float-right">
             <i class="fas fa-edit"></i> Tambah
         </a>
     @endcan
-    
     <div class="row">
         <div class="col-12">
             <div class="card ">
@@ -44,22 +43,28 @@
                 <thead>
                     <tr>
                     <th>No</th>
+                    <th>ID</th>
                     <th>Name</th>
+                    <th>Gaji Pokok</th>
+                    <th>Bonus Profesional</th>
                     <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($roles as $key => $role)
+                    @foreach ($jabatan as $row)
                         <tr>
                         <td>{{ ++$i }}</td>
-                        <td>{{ $role->name }}</td>
+                        <td>{{ $row->id }}</td>
+                        <td>{{ $row->name }}</td>
+                        <td>{{ $row->gaji_pokok}}</td>
+                        <td>{{ $row->bonus_profesional}}</td>
                         <td>
-                            <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
-                            @can('role-edit')
-                                <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+                            <a class="btn btn-info" href="{{ route('jabatan.show',$row->id) }}">Show</a>
+                            @can('jabatan-edit')
+                                <a class="btn btn-primary" href="{{ route('jabatan.edit',$row->id) }}">Edit</a>
                             @endcan
-                            @can('role-delete')
-                                {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
+                            @can('jabatan-delete')
+                                {!! Form::open(['method' => 'DELETE','route' => ['jabatan.destroy', $row->id],'style'=>'display:inline']) !!}
                                     {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                 {!! Form::close() !!}
                             @endcan
@@ -67,8 +72,7 @@
                         </tr>
                     @endforeach
                 </tbody>
-                </table>
-                {!! $roles->render() !!}
+                </table>                
             </div>
             <!-- /.card-body -->
             </div>

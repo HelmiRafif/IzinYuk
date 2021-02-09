@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RoleToUsersTable extends Migration
+class Jabatan extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class RoleToUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedBigInteger('role')->default(1);
+        Schema::create('jabatans', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('gaji_pokok');
+            $table->integer('bonus_profesional')->nullable($value = true);
+            $table->timestamps();
         });
     }
 
@@ -25,8 +29,6 @@ class RoleToUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('role');
-        });
+        Schema::dropIfExists('jabatans');
     }
 }

@@ -43,18 +43,21 @@
                         <td>{{ $row->name }}</td>
                         <td>{{ $row->email}}</td>
                         <td>
-                            @if(!empty($data->getRoleNames()))
-                                @foreach($data->getRoleNames() as $v)
+                            @if(!empty($row->getRoleNames()))
+                                @foreach($row->getRoleNames() as $v)
                                 <label class="badge badge-success">{{ $v }}</label>
                                 @endforeach
                             @endif
                         </td>
                         <td>
-                            <a href="<?= route('edit',$row->id) ?>" class="btn btn-app"><i class="fas fa-file"></i> Edit</a>
-
-                            {!! Form::open(['route' => ['delete',$row->id], 'method' => 'delete'])!!}
-                                <button type="submit" class="btn btn-app"><i class="fas fa-trash"></i> Hapus</a>
-                            {!! Form::close() !!}
+                            @can('user-edit')
+                                <a class="btn btn-primary" href="{{ route('users.edit',$row->id) }}">Edit</a>
+                            @endcan
+                            @can('user-delete')
+                                {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $row->id],'style'=>'display:inline']) !!}
+                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                {!! Form::close() !!}
+                            @endcan
                         </td>
                     </tr>  
                     @endforeach                  

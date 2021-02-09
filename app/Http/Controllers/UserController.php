@@ -12,11 +12,17 @@ use DB;
 
 class UserController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:user-list|user-create|user-edit|user-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:user-create', ['only' => ['create','store']]);
+        $this->middleware('permission:user-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:user-delete', ['only' => ['delete']]);
+    }
 
     public function index(Request $request)
     {
         $data = User::orderBy('id','DESC')->paginate(5);
-        dd($data);
         return view('admin.user.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -24,7 +30,7 @@ class UserController extends Controller
     public function create()
     {
         $roles = Role::pluck('name','name')->all();
-        return view('admin.user.tambah-user',compact('roles'));
+        return view('admin.user.add-user',compact('roles'));
     }
 
     public function store(Request $request)
@@ -76,15 +82,14 @@ class UserController extends Controller
     
         $user->assignRole($request->input('roles'));
     
-        return redirect()->route('users')
+        return redirect()->route('users.index')
                         ->with('success','Update user berhasil ');
     }
 
-    public function deleteuser($id)
+    public function destroy(User $user)
     {
-        $user = User::findOrFail($id);
         $user->delete();
-        return redirect('/users')->with('status','Berhasil menghapus user');
+        return redirect()->route('users.index')->with('status','Berhasil menghapus user');
     }
 
     // public function useradd()

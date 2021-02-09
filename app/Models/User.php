@@ -42,4 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function rolename()
+    {
+        return $this->belongsToMany(role::class);
+    }
 }

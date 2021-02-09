@@ -26,7 +26,7 @@ class RoleController extends Controller
 
     public function create()
     {
-        $permissions = Permission::get();
+        $permissions = Permission::get()->toArray();
         return view('admin.role.add-role', compact('permissions'));
     }
 

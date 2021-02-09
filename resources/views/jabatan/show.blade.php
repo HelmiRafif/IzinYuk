@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Show Role</h1>    
+    <h1>Detail Jabatan</h1>    
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -19,32 +19,35 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Name :</strong>
-                {{ $role->name }}
+                    {{ $jabatan->name }}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
-                <strong>Permissions: </strong>
-                @if(!empty($rolePermissions))
-                <ul>
-                    @foreach($rolePermissions as $v)                        
-                            <li>{{ $v->name }}</li>
-                    @endforeach
-                </ul>
-                @endif                
+                <strong>Gaji Pokok :</strong>
+                {{ $jabatan->gaji_pokok }}    
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Bonus Profesional :</strong>
+                @if(empty($jabatan->bonus_profesional))                                                
+                <?= 'tidak ada' ?>
+                @endif
+                {{ $jabatan->bonus_profesional }}
             </div>
         </div>
     </div>
 
     <div class="row">
         <div class="col-lg-12 margin-tb">
-            <div class="pull-right pb-5">
-                <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+            <div class="pull-right">
+                <a class="btn btn-primary" href="{{ route('jabatan.index') }}"> Back</a>
             </div>
         </div>
     </div>
 @stop
-                
+
 @section('css')
     <link rel="stylesheet" href="/css/admin_custom.css">
 @stop

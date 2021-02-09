@@ -277,12 +277,16 @@ return [
             'icon' => 'fas fa-fw fa-table',
             'submenu' => [
                 [
-                'text' => 'Data Pegawai',
+                'text' => 'Pegawai',
                 'url' => '/data-pegawai',
             ],
             [
                 'text' => 'Jabatan',
-                'url' => '/jabatan',
+                'route' => 'jabatan.index',
+            ],
+            [
+                'text' => 'Tunjangan',
+                'route' => 'tunjangan.index',
             ],
             ],
         ],       

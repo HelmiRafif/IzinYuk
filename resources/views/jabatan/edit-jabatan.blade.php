@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Edit Data User</h1>
+    <h1>Edit Data Jabatan</h1>
 
     @if (count($errors) > 0)
     <div class="alert alert-danger">
@@ -18,27 +18,23 @@
 @stop
 
 @section('content')
-    {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
+    {!! Form::model($jabatan, ['method' => 'PATCH','route' => ['jabatan.update', $jabatan->id]]) !!}
     {{ csrf_field() }}
 
         <div class="card-body">
             <div class="form-group">
-            <label for="name">Nama</label>
-            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','id' => 'name')) !!}
+                <label for="name">Nama</label>
+                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','id' => 'name',)) !!}
             </div>
+
             <div class="form-group">
-            <label for="email">Email</label>
-            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control','id' => 'email')) !!}
+                <label for="gajiPokok">Gaji Pokok</label>
+                {!! Form::text('gaji_pokok', null, array('placeholder' => 'Gaji Pokok','class' => 'form-control','id' => 'gajiPokok')) !!}
             </div>
+
             <div class="form-group">
-            <label for="password">Password</label><br>
-            {!! Form::password('password', null, array('placeholder' => 'Password','class' => 'form-control','id' => 'password')) !!}
-            </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <label for="InputRole">Role</label>
-                    {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','id' => "InputRole",'multiple')) !!}
-                </div>
+                <label for="gajiProfesional">Bonus Profesional</label>
+                {!! Form::text('bonus_profesional', null, array('placeholder' => 'Bonus Profesional','class' => 'form-control','id' => 'gajiProfesional')) !!}
             </div>
         </div>
         <!-- /.card-body -->

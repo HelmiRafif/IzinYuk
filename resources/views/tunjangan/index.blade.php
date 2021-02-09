@@ -4,7 +4,7 @@
 
 @section('content_header')
     <h1>Dashboard</h1>
-        <a href="<?= route('permissions.create') ?>" class="btn btn-app float-right">
+        <a href="<?= route('tunjangan.create') ?>" class="btn btn-app float-right">
             <i class="fas fa-edit"></i> Tambah
         </a>
 
@@ -30,22 +30,22 @@
                     <tr>
                     <th>ID</th>
                     <th>Nama</th>
-                    <th>Guard Name</th>
+                    <th>Besar Nominal Tunjangan</th>
                     <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($permissions as $row)
+                @foreach($tunjangans as $row)
                     <tr>
                     <td>{{ $row->id }}</td>
                     <td>{{ $row->name }}</td>
-                    <td>{{ $row->guard_name}}</td>
+                    <td>{{ $row->besar_tunjangan}}</td>
                     <td>
                         @can('permission-edit')
-                            <a class="btn btn-primary" href="{{ route('permissions.edit',$row->id) }}">Edit</a>
+                            <a class="btn btn-primary" href="{{ route('tunjangan.edit',$row->id) }}">Edit</a>
                         @endcan
                         @can('permission-delete')
-                            {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $row->id],'style'=>'display:inline']) !!}
+                            {!! Form::open(['method' => 'DELETE','route' => ['tunjangan.destroy', $row->id],'style'=>'display:inline']) !!}
                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                         @endcan
