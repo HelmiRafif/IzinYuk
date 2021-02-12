@@ -13,12 +13,24 @@ class CreatePotonganDetailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('potongan_details', function (Blueprint $table) {        
-            $table->increments('potongan_pegawai_id');
-            $table->unsignedBigInteger('potongan_id');
+        $tableNames = config('permission.table_names');
+
+        Schema::create('potongan_details', function (Blueprint $table) use ($tableNames) {        
+            $table->id();
+            $table->unsignedBigInteger('potongan_pegawai_id');
+            $table->unsignedBigInteger('potongan_id');            
             $table->integer('besar_potongan');
             $table->integer('banyak_hari_potongan');
             $table->timestamps();
+
+            $table->foreign('potongan_id')
+                ->references('id')
+                ->on('potongans')
+                ->onDelete('cascade');
+            $table->foreign('potongan_pegawai_id')
+                ->references('pegawai_id')
+                ->on('potongan_pegawais')
+                ->onDelete('cascade');
         });
     }
 

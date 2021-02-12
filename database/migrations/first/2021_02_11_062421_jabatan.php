@@ -14,7 +14,7 @@ class Jabatan extends Migration
     public function up()
     {
         Schema::create('jabatans', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->integer('gaji_pokok');
             $table->integer('bonus_profesional')->nullable($value = true);
@@ -29,6 +29,6 @@ class Jabatan extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jabatans');
+        //
     }
 }

@@ -288,6 +288,10 @@ return [
                 'text' => 'Tunjangan',
                 'route' => 'tunjangan.index',
             ],
+            [
+                'text' => 'Potongan',
+                'route' => 'potongan.index',
+            ],
             ],
         ],       
     ],

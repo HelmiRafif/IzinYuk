@@ -4,36 +4,40 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\pegawai;
-use App\Models\permission;
+use App\Models\potongan;
 use DB;
 
-class PegawaiController extends Controller
+class PotonganController extends Controller
 {
     function __construct()
     {
-        $this->middleware('pegawai:pegawai-list|pegawai-create|pegawai-edit|pegawai-delete', ['only' => ['index','store']]);
-        $this->middleware('pegawai:pegawai-create', ['only' => ['create','store']]);
-        $this->middleware('pegawai:pegawai-edit', ['only' => ['edit','update']]);
-        $this->middleware('pegawai:pegawai-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:potongan-list|potongan-create|potongan-edit|potongan-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:potongan-create', ['only' => ['create','store']]);
+        $this->middleware('permission:potongan-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:potongan-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
-        $products = Pegawai::orderBy('id','DESC')->paginate(50);
-        return view('pegawai.index',compact('pegawai'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        $potongan = potongan::orderBy('id','DESC')->paginate(5);
+        return view('potongan.index', compact('potongan'))
+            ->with('i', ($request->input('page', 1) -1) * 5);
     }
+
     
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+    // public function add()
+    // {
+    //     return view('admin.permission.add-permission');
+    // }
     public function create(Request $request)
     {
-        $pegawai = pegawai::get();
-        return view('pegawai.add-pegawai', compact('pegawai'));
+        $potongan = potongan::get();
+        return view('potongan.add-potongan', compact('potongan'));
     }
 
     /**
@@ -46,12 +50,12 @@ class PegawaiController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'gaji_pokok' => 'required',
+            'besar_potongan' => 'required',
         ]);
         $input = $request->all();
-        pegawai::create($input);
+        potongan::create($input);
 
-        return redirect()->route('pegawai.index')->with('success','Berhasil menambah pegawai');
+        return redirect()->route('potongan.index')->with('success','Berhasil menambah potongan');
     }
 
     /**
@@ -62,8 +66,8 @@ class PegawaiController extends Controller
      */
     public function show($id)
     {
-        $pegawai = pegawai::find($id);
-        return view('pegawai.show',compact('pegawai'));
+        $potongan = potongan::find($id);
+        return view('potongan.show',compact('potongan'));
     }
 
     /**
@@ -74,8 +78,8 @@ class PegawaiController extends Controller
      */
     public function edit($id)
     {
-        $pegawai = pegawai::find($id);
-        return view('pegawai.edit-pegawai',compact('pegawai'));
+        $potongan = potongan::find($id);
+        return view('potongan.edit-potongan',compact('potongan'));
     }
 
     /**
@@ -89,17 +93,16 @@ class PegawaiController extends Controller
     {
         request()->validate([
             'name' => 'required',
-            'gaji_pokok' => 'required',
+            'besar_potongan' => 'required',
         ]);
         
-        $pegawai = Jabatan::find($id);
-        $pegawai->name = $request->input('name');
-        $pegawai->gaji_pokok = $request->input('gaji_pokok');
-        $pegawai->bonus_profesional = $request->input('bonus_profesional');
-        $pegawai->save();
+        $potongan = potongan::find($id);
+        $potongan->name = $request->input('name');
+        $potongan->besar_potongan = $request->input('besar_potongan');    
+        $potongan->save();
     
-        return redirect()->route('pegawai.index')
-                        ->with('success','Berhasil update pegawai');
+        return redirect()->route('potongan.index')
+                        ->with('success','Berhasil update potongan');
     }
 
     /**
@@ -112,8 +115,7 @@ class PegawaiController extends Controller
     {
         $id->delete();
     
-        return redirect()->route('pegawai.index')
-                        ->with('success','Berhasil hapus pegawai');
+        return redirect()->route('potongan.index')
+                        ->with('success','Berhasil hapus potongan');
     }
 }
-

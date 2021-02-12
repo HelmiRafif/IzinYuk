@@ -19,7 +19,7 @@ class RoleController extends Controller
 
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','DESC')->paginate(5);
+        $roles = Role::orderBy('id','ASC')->paginate(5);
         return view('admin.role.index',compact('roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -27,6 +27,7 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::get()->toArray();
+        // $permissions = Permission::get();
         return view('admin.role.add-role', compact('permissions'));
     }
 
@@ -35,10 +36,12 @@ class RoleController extends Controller
         $this->validate($request, [
             'name' => 'required|unique:roles,name',
             'permission' => 'required',
+            'guard_name' => 'required',
         ]);
-    
+        
         $role = Role::create(['name' => $request->input('name')]);
         $role->syncPermissions($request->input('permission'));
+        // $roleid->syncUser($request->input('role_id'));
     
         return redirect()->route('roles.index')->with('success','Role created successfully');
     }
@@ -74,9 +77,9 @@ class RoleController extends Controller
         $role = Role::find($id);
         $role->name = $request->input('name');
         $role->save();
-    
+        
         $role->syncPermissions($request->input('permission'));
-    
+
         return redirect()->route('roles.index')
                         ->with('success','Role updated successfully');
     }

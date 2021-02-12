@@ -29,6 +29,22 @@
             <label for="nameRole">Role Name</label>
             {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','id' => 'nameRole')) !!}
             </div>
+            {{-- <div class="form-group">
+            <label for="idRole">Role ID</label>
+            {!! Form::number('role_id', null, array('placeholder' => 'Role ID','class' => 'form-control','id' => 'idRole')) !!}
+            </div> --}}
+
+            <div class="form-group">
+                <label for="exampleSelectRounded0">Guard Name</label>
+                <select class="custom-select rounded-0" id="exampleSelectRounded0" name="guard_name">
+                <option Value="web">Web</option>
+                <option Value="auth">Auth</option>
+                <option Value="console">Console</option>
+                <option Value="api">Api</option>
+                <option Value="channels">Channels</option>
+                </select>
+            </div>
+
             <div class="form-group">
                 <strong>Permission:</strong>
                 <br/>

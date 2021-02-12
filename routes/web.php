@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TunjanganController;
+use App\Http\Controllers\PotonganController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,6 +36,7 @@ Route::group(['middleware' => ['auth']], function() {
     // Route::resource('pegawai',PegawaiController::class);
     Route::resource('jabatan',JabatanController::class);
     Route::resource('tunjangan',TunjanganController::class);
+    Route::resource('potongan',PotonganController::class);
 
     Route::get('/dashboard', function(){
         return view('admin.dashboard');

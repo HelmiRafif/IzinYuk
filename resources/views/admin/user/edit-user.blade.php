@@ -23,17 +23,21 @@
 
         <div class="card-body">
             <div class="form-group">
-            <label for="name">Nama</label>
-            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','id' => 'name')) !!}
+                <label for="name">Nama</label>
+                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','id' => 'name')) !!}
             </div>
             <div class="form-group">
-            <label for="email">Email</label>
-            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control','id' => 'email')) !!}
+                <label for="email">Email</label>
+                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control','id' => 'email')) !!}
             </div>
             <div class="form-group">
-            <label for="password">Password</label><br>
-            {!! Form::password('password', null, array('placeholder' => 'Password','class' => 'form-control','id' => 'password')) !!}
+                <label for="password1">Password</label><br>
+                {!! Form::password('password', null, array('placeholder' => 'Password','class' => 'form-control','id' => 'password1')) !!}
             </div>
+            <div class="form-group">
+                <label for="InputConfirm">Konfirmasi Password</label>
+                {!! Form::password('confirm-password', null, array('placeholder' => 'Confirm Password','class' => 'form-control', 'id' => 'InputConfirm')) !!}
+                </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <label for="InputRole">Role</label>

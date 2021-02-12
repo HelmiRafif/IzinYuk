@@ -19,13 +19,22 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Name :</strong>
-                    {{ $jabatan->name }}
+                    {{ $potongan->name }}
             </div>
         </div>
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Gaji Pokok :</strong>
-                {{ $jabatan->gaji_pokok }}    
+                {{ $potongan->gaji_pokok }}    
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Bonus Profesional :</strong>
+                @if(empty($potongan->bonus_profesional))                                                
+                <?= 'tidak ada' ?>
+                @endif
+                {{ $potongan->bonus_profesional }}
             </div>
         </div>
     </div>

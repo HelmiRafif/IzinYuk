@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>    
+    <h1>Data Potongan Gaji</h1>    
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -15,11 +15,10 @@
 
 @section('content')
     @can('role-create')        
-        <a href="<?= route('roles.create') ?>" class="btn btn-app float-right">
+        <a href="<?= route('potongan.create') ?>" class="btn btn-app float-right">
             <i class="fas fa-edit"></i> Tambah
         </a>
     @endcan
-    
     <div class="row">
         <div class="col-12">
             <div class="card ">
@@ -43,23 +42,25 @@
                 <table class="table table-hover text-nowrap">
                 <thead>
                     <tr>
-                    <th>No</th>                    
-                    <th>Name</th>
+                    <th>No</th>
+                    <th>Jenis Potongan</th>
+                    <th>Besar Potongan</th>
                     <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($roles as $key => $role)
+                    @foreach ($potongan as $row)
                         <tr>
-                        <td>{{ $role->id }}</td>                        
-                        <td>{{ $role->name }}</td>
+                        <td>{{ ++$i }}</td>
+                        <td>{{ $row->name }}</td>
+                        <td>{{ $row->besar_potongan}}</td>                        
                         <td>
-                            <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
-                            @can('role-edit')
-                                <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+                            <a class="btn btn-info" href="{{ route('potongan.show',$row->id) }}">Show</a>
+                            @can('potongan-edit')
+                                <a class="btn btn-primary" href="{{ route('potongan.edit',$row->id) }}">Edit</a>
                             @endcan
-                            @can('role-delete')
-                                {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
+                            @can('potongan-delete')
+                                {!! Form::open(['method' => 'DELETE','route' => ['potongan.destroy', $row->id],'style'=>'display:inline']) !!}
                                     {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                 {!! Form::close() !!}
                             @endcan
@@ -67,8 +68,7 @@
                         </tr>
                     @endforeach
                 </tbody>
-                </table>
-                {!! $roles->render() !!}
+                </table>                
             </div>
             <!-- /.card-body -->
             </div>

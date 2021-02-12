@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\Contracts\Role as RoleContract;
 use Illuminate\Support\Arr;
 use Hash;
 use DB;
@@ -22,15 +23,21 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $data = User::orderBy('id','DESC')->paginate(5);
+        $data = User::orderBy('id','ASC')->paginate(25);
         return view('admin.user.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
     public function create()
     {
-        $roles = Role::pluck('name','name')->all();
-        return view('admin.user.add-user',compact('roles'));
+        // $roles = Role::pluck('name','name')->all();
+        // $rolesId = Role::pluck('id','name');
+        // $roles = Role::findByName(string $name, $guardName = null);
+        $roles = Role::query()
+        ->select(['name','id'])
+        ->get()->toArray();        
+        // dd($roles->keyBy('id'));
+        return view('admin.user.tambah-user',compact('roles'));
     }
 
     public function store(Request $request)
@@ -39,15 +46,41 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'roles' => 'required',
         ]);
-    
-        $input = $request->all();
+
+        $input = $request->all();        
         $input['password'] = Hash::make($input['password']);
-    
+        // $input['roles'] = 
+            // foreach ($input as $p) {
+            //     echo $p->id;
+            //     // Role::find($value['id']);
+            // }
+        
+        // $hasrole = $input['roles']->id;
+        // $user->user_has_role()->attach($hasrole);
+        // dd($hasrole);
+
+        // $userRole = findByName(string $input['roles'], $guardName = null);
+
+        // $roleuser = foreach ($ as $key => $value) {
+        //     # code...
+        // }
+        // $userId = Role::find($input['roles']);
+        // $userId->roles()->attach($userId);
+        
         $user = User::create($input);
         $user->assignRole($request->input('roles'));
-    
+
+        
+        // $user->syncRole($request->input('role_id'));
+        
+        // $role = role::find($id);
+        // $user->roles()->attach($role);
+
+        // $rolesave = role::find($id);
+        // $rolesave->roles()->attach($id);
+
         return redirect()->route('users.index')->with('success','Berhasil menambah user');
     }
 
@@ -80,15 +113,15 @@ class UserController extends Controller
         $user->update($input);
         DB::table('model_has_roles')->where('model_id',$id)->delete();
     
-        $user->assignRole($request->input('roles'));
+        $user->syncRoles($request->input('roles'));
     
         return redirect()->route('users.index')
                         ->with('success','Update user berhasil ');
     }
 
-    public function destroy(User $user)
+    public function destroy($id)
     {
-        $user->delete();
+        User::find($id)->delete();
         return redirect()->route('users.index')->with('status','Berhasil menghapus user');
     }
 

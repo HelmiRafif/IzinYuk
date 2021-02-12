@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePotonganPegawaisTable extends Migration
+class Tunjangan extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreatePotonganPegawaisTable extends Migration
      */
     public function up()
     {
-        Schema::create('potongan_pegawais', function (Blueprint $table) {
-            $table->unsignedBigInteger('pegawai_id');
-            $table->integer('total_potongan');
-            $table->date('periode_potongan');
+        Schema::create('tunjangans', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->integer('besar_tunjangan');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreatePotonganPegawaisTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('potongan_pegawais');
+        Schema::dropIfExists('tunjangans');
     }
 }

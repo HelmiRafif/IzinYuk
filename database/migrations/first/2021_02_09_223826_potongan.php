@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Tunjangan extends Migration
+class Potongan extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class Tunjangan extends Migration
      */
     public function up()
     {
-        Schema::create('tunjangans', function (Blueprint $table) {
-            $table->increments('id');
+        Schema::create('potongans', function (Blueprint $table) {
+            $table->id();
             $table->string('name');
-            $table->integer('besar_tunjangan');
+            $table->integer('besar_potongan');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class Tunjangan extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tunjangans');
+        Schema::dropIfExists('potongans');
     }
 }

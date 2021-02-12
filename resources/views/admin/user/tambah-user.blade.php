@@ -46,8 +46,14 @@
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <label for="InputRole">Role</label>
-                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','id' => 'InputRole','multiple')) !!}
+                    <strong>Role</strong><br/>
+                    {{-- {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','id' => 'InputRole','multiple')) !!} --}}
+                    @foreach($roles as $value)      
+                    <label>              
+                        {{ Form::checkbox('roles[]', $value['id'], in_array($value['id'], $roles) ? true : false, array('class' => 'name')) }}
+                        {{ $value['name'] }}
+                    </label><br>
+                    @endforeach
                 </div>
             </div>
         </div>

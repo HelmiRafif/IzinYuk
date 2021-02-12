@@ -14,7 +14,7 @@ class CreatePegawaisTable extends Migration
     public function up()
     {
         Schema::create('pegawais', function (Blueprint $table) {
-            $table->increments('id'); 
+            $table->id(); 
             $table->string('nama');
             $table->string('email')->unique();
             $table->text('alamat')->nullable($value = true);
@@ -22,9 +22,14 @@ class CreatePegawaisTable extends Migration
             $table->string('rekening')->nullable($value = true);
             $table->string('type_pegawai')->nullable($value = true);
             $table->unsignedBigInteger('bank_id')->nullable($value = true);
-            $table->unsignedBigInteger('jabatan_id')->nullable($value = true);
+            $table->unsignedBigInteger('jabatan_id');
             $table->integer('bonus_loyalitas')->nullable($value = true);
             $table->timestamps();
+
+            $table->foreign('jabatan_id')
+                ->references('id')
+                ->on('jabatans')
+                ->onDelete('cascade');
         });
     }
 

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Contracts\Role as RoleContract;
+use Illuminate\Http\Request;
+use App\Models\role;
 
 class User extends Authenticatable
 {
@@ -21,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -42,8 +46,29 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function rolename()
-    {
-        return $this->belongsToMany(role::class);
-    }
+    // public function roleid()
+    // {
+    //     return $this->hasMany(role::class);
+    //     User::find($input['roles']);
+    // }
+
+    // public static function findByName(string $name, $guardName = null):RoleContract
+    // {
+    //     # code...
+    // }
+
+    // public function hasrole(Request $request, $id)
+    // {        
+    //     $roleid = role::find($id);
+    //     foreach ($roleid as $key => $i) {
+    //         $roleid->syncRoles($request->input($i));
+    //     }
+
+
+    // }
+
+    // $user = App\Models\User::first();
+
+    // foreach ($user->roles as $role) {
+    //     echo $role->name;
 }
