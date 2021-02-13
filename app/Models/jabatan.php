@@ -18,4 +18,10 @@ class jabatan extends Model
     protected $hidden = [
         '_token',
     ];
+    
+
+    public function jabatan()
+    {
+        $this->belongsTo(pegawai::class);
+    }
 }

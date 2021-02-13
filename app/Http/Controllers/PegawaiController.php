@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\pegawai;
+use App\Models\jabatan;
 use App\Models\permission;
 use DB;
 
@@ -12,15 +13,15 @@ class PegawaiController extends Controller
 {
     function __construct()
     {
-        $this->middleware('pegawai:pegawai-list|pegawai-create|pegawai-edit|pegawai-delete', ['only' => ['index','store']]);
-        $this->middleware('pegawai:pegawai-create', ['only' => ['create','store']]);
-        $this->middleware('pegawai:pegawai-edit', ['only' => ['edit','update']]);
-        $this->middleware('pegawai:pegawai-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:pegawai-list|pegawai-create|pegawai-edit|pegawai-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:pegawai-create', ['only' => ['create','store']]);
+        $this->middleware('permission:pegawai-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:pegawai-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
-        $products = Pegawai::orderBy('id','DESC')->paginate(50);
+        $pegawai = Pegawai::orderBy('id','DESC')->paginate(25);
         return view('pegawai.index',compact('pegawai'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -32,8 +33,8 @@ class PegawaiController extends Controller
      */
     public function create(Request $request)
     {
-        $pegawai = pegawai::get();
-        return view('pegawai.add-pegawai', compact('pegawai'));
+        $jabatan = jabatan::get()->toArray();        
+        return view('pegawai.add-pegawai', compact('jabatan'));
     }
 
     /**
@@ -43,14 +44,20 @@ class PegawaiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {        
         $this->validate($request, [
-            'name' => 'required',
-            'gaji_pokok' => 'required',
+            'nama' => 'required',
+            'email' => 'required',
+            'alamat' => 'required',
+            // 'tanggal_masuk' => 'required',
+            'rekening' => 'required',
+            'type_pegawai' => 'required',
+            'bank_id' => 'required',
+            // 'jabatan_id' => 'required',
         ]);
         $input = $request->all();
         pegawai::create($input);
-
+        
         return redirect()->route('pegawai.index')->with('success','Berhasil menambah pegawai');
     }
 
@@ -88,13 +95,19 @@ class PegawaiController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate([
-            'name' => 'required',
-            'gaji_pokok' => 'required',
+            'nama' => 'required',
+            'email' => 'required',
+            'alamat' => 'required',
+            'tanggal_masuk' => 'required',
+            'rekening' => 'required',
+            'type_pegawai' => 'required',
+            'bank_id' => 'required',
+            'jabatan_id' => 'required',
         ]);
         
         $pegawai = Jabatan::find($id);
         $pegawai->name = $request->input('name');
-        $pegawai->gaji_pokok = $request->input('gaji_pokok');
+        $pegawai->email = $request->input('email');
         $pegawai->bonus_profesional = $request->input('bonus_profesional');
         $pegawai->save();
     

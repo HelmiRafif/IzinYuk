@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Edit Data Jabatan</h1>
+    <h1>Edit Data Pegawai</h1>
 
     @if (count($errors) > 0)
     <div class="alert alert-danger">

@@ -14,8 +14,8 @@
 @stop
 
 @section('content')
-    @can('role-create')        
-        <a href="<?= route('roles.create') ?>" class="btn btn-app float-right">
+    @can('izin-create')        
+        <a href="<?= route('izin.create') ?>" class="btn btn-app float-right">
             <i class="fas fa-edit"></i> Tambah
         </a>
     @endcan
@@ -23,7 +23,21 @@
     <div class="row">
         <div class="col-12">
             <div class="card ">
+            <div class="card-header">
+                <h3 class="card-title">Responsive Hover Table</h3>
 
+                <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                    <div class="input-group-append">
+                    <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    </div>
+                </div>
+                </div>
+            </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
@@ -35,17 +49,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($roles as $key => $role)
+                    @foreach ($izin as $key => $izin)
                         <tr>
-                        <td>{{ $role->id }}</td>                        
-                        <td>{{ $role->name }}</td>
+                        <td>{{ $izin->id }}</td>                        
+                        <td>{{ $izin->name }}</td>
                         <td>
-                            <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
-                            @can('role-edit')
-                                <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+                            <a class="btn btn-info" href="{{ route('izin.show',$izin->id) }}">Show</a>
+                            @can('izin-edit')
+                                <a class="btn btn-primary" href="{{ route('izin.edit',$izin->id) }}">Edit</a>
                             @endcan
-                            @can('role-delete')
-                                {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
+                            @can('izin-delete')
+                                {!! Form::open(['method' => 'DELETE','route' => ['izin.destroy', $izin->id],'style'=>'display:inline']) !!}
                                     {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
                                 {!! Form::close() !!}
                             @endcan
@@ -54,7 +68,7 @@
                     @endforeach
                 </tbody>
                 </table>
-                {!! $roles->render() !!}
+                {!! $izin->render() !!}
             </div>
             <!-- /.card-body -->
             </div>

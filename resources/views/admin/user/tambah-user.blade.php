@@ -48,7 +48,7 @@
                 <div class="form-group">
                     <strong>Role</strong><br/>
                     {{-- {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','id' => 'InputRole','multiple')) !!} --}}
-                    @foreach($roles as $value)      
+                    @foreach($roles as $value)
                     <label>              
                         {{ Form::checkbox('roles[]', $value['id'], in_array($value['id'], $roles) ? true : false, array('class' => 'name')) }}
                         {{ $value['name'] }}

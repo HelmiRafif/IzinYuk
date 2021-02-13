@@ -244,12 +244,12 @@ return [
             'icon' => 'fas fa-fw fa-virus',
             'submenu' => [
                 [
-                'text' => 'Data Izin',
-                'url' => '/data-izin',
+                'text' => 'Data Perizinan',
+                'route' => 'izin.index',
             ],
             [
-                'text' => 'Blank',
-                'url' => '/role',
+                'text' => 'Buat Perizinan',                
+                'route' => 'izin.create'
             ], 
             ],
         ],
@@ -260,7 +260,7 @@ return [
             'submenu' => [
                 [
                 'text' => 'Data User',
-                'url' => '/users',
+                'route' => 'users.index',
             ],
             [
                 'text' => 'Role',
@@ -278,7 +278,7 @@ return [
             'submenu' => [
                 [
                 'text' => 'Pegawai',
-                'url' => '/data-pegawai',
+                'route' => 'pegawai.index',
             ],
             [
                 'text' => 'Jabatan',

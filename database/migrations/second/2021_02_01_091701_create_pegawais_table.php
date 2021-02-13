@@ -29,7 +29,7 @@ class CreatePegawaisTable extends Migration
             $table->foreign('jabatan_id')
                 ->references('id')
                 ->on('jabatans')
-                ->onDelete('cascade');
+                ->onDelete('SET NULL');
         });
     }
 

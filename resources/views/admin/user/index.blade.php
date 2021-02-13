@@ -12,21 +12,17 @@
 @stop
 
 @section('content')
-    <!-- Main content -->
-    <section class="content">
-        <div class="container-fluid">
+    <!-- Main content -->    
+        <a  href="<?= route('users.create') ?>" class="btn btn-app float-right">
+            <i class="fas fa-edit"></i> Tambah
+        </a>
             <div class="row">
             <div class="col-12">
-                <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">DataTable with minimal features & hover style</h3>
-                    <a  href="<?= route('users.create') ?>" class="btn btn-app float-right">
-                        <i class="fas fa-edit"></i> Tambah
-                    </a>                    
-                </div>
+                <div class="card">                 
+                    
                 <!-- /.card-header -->
-                <div class="card-body">
-                    <table id="example2" class="table table-bordered table-hover">
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -73,9 +69,9 @@
             </div>
             <!-- /.row -->
         </div>
-        <!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+        <!-- /.container-fluid -->       
+        </table>
+    </div> 
 @stop
                 
 @section('css')
