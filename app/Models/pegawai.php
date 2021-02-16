@@ -9,6 +9,7 @@ class pegawai extends Model
 {
     use HasFactory;
 
+    protected $guarded = [ ];
     protected $fillable = [
         'nama',
         'email',
@@ -36,5 +37,6 @@ class pegawai extends Model
     public function pegawai()
     {
         $this->belongsTo(jabatan::class);
+        $this->hasMany(izin::class);
     }
 }

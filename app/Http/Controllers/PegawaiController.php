@@ -44,19 +44,31 @@ class PegawaiController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {        
-        $this->validate($request, [
-            'nama' => 'required',
-            'email' => 'required',
-            'alamat' => 'required',
-            // 'tanggal_masuk' => 'required',
-            'rekening' => 'required',
-            'type_pegawai' => 'required',
-            'bank_id' => 'required',
-            // 'jabatan_id' => 'required',
+    {
+        $data = new pegawai([
+            'nama' => $request->get('nama'),
+            'email' => $request->get('email'),
+            'alamat' => $request->get('alamat'),
+            'rekening' => $request->get('rekening'),
+            'type_pegawai' => $request->get('type_pegawai'),
+            'bank_id' => $request->get('bank_id'),
+            'jabatan_id' => $request->get('jabatan_id')
         ]);
-        $input = $request->all();
-        pegawai::create($input);
+        $data->save();
+
+
+        // $this->validate($request, [
+        //     'nama' => 'required',
+        //     'email' => 'required',
+        //     'alamat' => 'required',
+        //     // 'tanggal_masuk' => 'required',
+        //     'rekening' => 'required',
+        //     'type_pegawai' => 'required',
+        //     'bank_id' => 'required',
+        //     // 'jabatan_id' => 'required',
+        // ]);
+        // $input = $request->all();
+        // pegawai::create($input);
         
         return redirect()->route('pegawai.index')->with('success','Berhasil menambah pegawai');
     }

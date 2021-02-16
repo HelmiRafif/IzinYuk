@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Tambah Pegawai</h1>
+    <h1>Data Pegawai</h1>
 
     @if ($message = Session::get('error'))
         <div class="alert alert-error">
@@ -14,32 +14,43 @@
 
 @section('content')
     {!! Form::open(array('route' => 'pegawai.store','method'=>'POST')) !!}
-        <div class="card-body">
-
-            <div class="form-group">
-                <label for="namaPegawai">Nama Pegawai</label>
-                {!! Form::text('nama', null, array('placeholder' => 'Nama Pegawai','class' => 'form-control','id' => 'namaPegawai')) !!}
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control','id' => 'email')) !!}
+        <div class="card-body mx-auto" style="width:1080px">
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="namaPegawai">Nama Pegawai</label>
+                        {!! Form::text('nama', null, array('placeholder' => 'Nama Pegawai','class' => 'form-control','id' => 'namaPegawai')) !!}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control','id' => 'email')) !!}
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="alamat">Alamat</label>
                 {!! Form::text('alamat', null, array('placeholder' => 'Alamat','class' => 'form-control','id' => 'alamat')) !!}
             </div>
-            <div class="form-group">
-                <label for="rekening">Nomor Rekening</label>
-                {!! Form::text('rekening', null, array('placeholder' => 'Rekening','class' => 'form-control','id' => 'rekening')) !!}
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="bank">Bank ID</label>
+                        {!! Form::text('bank_id', null, array('placeholder' => 'Bank ID','class' => 'form-control','id' => 'bank')) !!}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="rekening">Nomor Rekening</label>
+                        {!! Form::text('rekening', null, array('placeholder' => 'Rekening','class' => 'form-control','id' => 'rekening')) !!}
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="tipePegawai">Tipe Pegawai</label>
                 {!! Form::text('type_pegawai', null, array('placeholder' => 'Tipe Pegawai','class' => 'form-control','id' => 'tipePegawai')) !!}
-            </div>
-            <div class="form-group">
-                <label for="bank">Bank ID</label>
-                {!! Form::text('bank_id', null, array('placeholder' => 'Bank ID','class' => 'form-control','id' => 'bank')) !!}
-            </div>
+            </div>            
             <div class="form-group">                
                 <label for="exampleSelectBorder">Jabatan</label>
                 <select class="custom-select form-control-border" id="exampleSelectBorder" name="jabatan_id">                
@@ -61,7 +72,7 @@
         </div>
         <!-- /.card-body -->
 
-        <div class="card-footer pb-5">
+        <div class="card-footer pb-3">
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     {!! Form::close() !!}

@@ -19,7 +19,7 @@ class CreateIzinsTable extends Migration
             $table->date('tanggal_selesai');
             $table->string('keterangan');
             $table->string('type_izin');
-            $table->string('status_diterima');
+            $table->string('status_diterima')->nullable();
             $table->unsignedBigInteger('pegawai_id');
             $table->timestamps();
 

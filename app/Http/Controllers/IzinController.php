@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Doctrine\DBAL\Schema\Table;
 use App\Models\izin;
 use App\Models\pegawai;
 
@@ -30,8 +31,9 @@ class IzinController extends Controller
      */
     public function create(Request $request)
     {
-        $izin = izin::get();        
-        return view('izin.add-izin', compact('izin'));
+        $izin = izin::get();
+        $pegawai = pegawai::get()->toArray();
+        return view('izin.add-izin', compact('pegawai'));
     }
 
     /**
@@ -42,14 +44,25 @@ class IzinController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
+        $data = new izin([ 
+        'pegawai_id'=> $request->get('pegawai_id'),
+        'type_izin'=> $request->get('type_izin'),
+        'tanggal_mulai'=> $request->get('tanggal_mulai'),
+        'tanggal_selesai'=> $request->get('tanggal_selesai'),
+        'keterangan'=> $request->get('keterangan'),
         ]);
-        $input = $request->all();
-        izin::create($input);
+        $data->save();
 
-        return redirect()->route('izin.index')->with('success','Berhasil menambah izin');
+        // $this->validate($request, [
+        //     'type_izin' => 'required',
+        //     'tanggal_mulai' => 'required',
+        //     'tanggal_selesai' => 'required',
+        //     'keterangan' => 'required'
+        // ]);
+        // $pid = Table::select('id')->where('pegawais',$id)->get();
+        // izin::create(['type_izin' => $request->input('type_izin'), 'tanggal_mulai' => $request->input('tanggal_mulai'), 'tanggal_selesai' => $request->input('tanggal_selesai'), 'keterangan' => $request->input('keterangan')]);
+        
+        return redirect()->route('izin.index')->with('success','Berhasil membuat perizinan');
     }
 
     /**
@@ -86,14 +99,17 @@ class IzinController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate([
-            'name' => 'required',
-            'email' => 'required',
+            'type_izin' => 'required',
+            'tanggal_mulai' => 'required',
+            'tanggal_selesai' => 'required',
+            'keterangan' => 'required',
         ]);
         
-        $izin = Jabatan::find($id);
-        $izin->name = $request->input('name');
-        $izin->email = $request->input('email');
-        $izin->bonus_profesional = $request->input('bonus_profesional');
+        $izin = izin::find($id);
+        $izin->type_izin = $request->input('type_izin');
+        $izin->tanggal_mulai = $request->input('tanggal_mulai');
+        $izin->tangal_selesai = $request->input('tanggal_selesai');
+        $izin->keterangan = $request->input('keterangan');
         $izin->save();
     
         return redirect()->route('izin.index')
@@ -111,6 +127,6 @@ class IzinController extends Controller
         $id->delete();
     
         return redirect()->route('izin.index')
-                        ->with('success','Berhasil hapus izin');
+                        ->with('success','Berhasil hapus data izin');
     }
 }

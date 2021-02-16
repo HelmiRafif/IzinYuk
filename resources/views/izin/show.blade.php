@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Show Role</h1>    
+    <h1>Detail</h1>    
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">

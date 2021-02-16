@@ -4,10 +4,10 @@
 
 @section('content_header')
     <div class="pull-left">
-        <h2>Create New Role</h2>
+        <h2>Ajukan Perizinan</h2>
     </div>
     <div class="pull-right">
-        <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+        <a class="btn btn-primary" href="{{ route('izin.index') }}"> Back</a>
     </div>
 @stop
 
@@ -23,37 +23,52 @@
 @endif
 
 @section('content')
-    {!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
-        <div class="card-body">
-            <div class="form-group">
-            <label for="nameRole">Role Name</label>
-            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','id' => 'nameRole')) !!}
-            </div>
+    {!! Form::open(array('route' => 'izin.store','method'=>'POST')) !!}
+        <div class="card-body">            
             {{-- <div class="form-group">
             <label for="idRole">Role ID</label>
             {!! Form::number('role_id', null, array('placeholder' => 'Role ID','class' => 'form-control','id' => 'idRole')) !!}
             </div> --}}
-
-            <div class="form-group">
-                <label for="exampleSelectRounded0">Guard Name</label>
-                <select class="custom-select rounded-0" id="exampleSelectRounded0" name="guard_name">
-                <option Value="web">Web</option>
-                <option Value="auth">Auth</option>
-                <option Value="console">Console</option>
-                <option Value="api">Api</option>
-                <option Value="channels">Channels</option>
+            <div class="form-group pb-3">
+                <label for="exampleSelectRounded0">Tipe Izin</label>
+                <select class="custom-select rounded-0" id="exampleSelectRounded0" name="type_izin">
+                <option selected disabled style="display:none">Tipe Perizinan</option>
+                <option Value="sakit">Sakit</option>
+                <option Value="sakit">Hal Penting</option>
+                <option Value="cuti hamil">Cuti Hamil</option>    
+                <option Value="cuti tahunan">Cuti Tahunan</option>
+                <option Value="cuti besar">Cuti Besar</option>
                 </select>
             </div>
 
-            <div class="form-group">
-                <strong>Permission:</strong>
-                <br/>
+            <div class="row pb-2">
+                <div class="col">
+                    <div class="form-group">
+                    <label>Tanggal Mulai : </label>
+                    {!! Form::date('tanggal_mulai', \Carbon\Carbon::now()); !!}
+                    </div>
+                </div>
 
-                @foreach($permissions as $value)
-                    <label>{{ Form::checkbox('permission[]', $value['id'], in_array($value['id'], $permissions) ? true : false, array('class' => 'name')) }}
-                    {{ $value['name'] }}</label>
-                <br/>
-                @endforeach
+                <div class="col">
+                    <div class="form-group">
+                    <label>Tanggal Selesai : </label>
+                    {!! Form::date('tanggal_selesai', \Carbon\Carbon::now()); !!}
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="ket">Keterangan</label>
+                {!! Form::textarea('keterangan', null, array('placeholder' => 'Berikan keterangan izin','class' => 'form-control', 'rows' => '3','id' => 'ket')) !!}
+            </div>
+
+            <div class="form-group">                
+                <label for="exampleSelectBorder">Pegawai mana</label>
+                <select class="custom-select form-control-border" id="exampleSelectBorder" name="pegawai_id">                
+                    @foreach($pegawai as $value)
+                        <option value={{ $value['id'] }}>{{ $value['nama'] }}</option>                    
+                    @endforeach
+                </select>
             </div>
         </div>
         <!-- /.card-body -->
