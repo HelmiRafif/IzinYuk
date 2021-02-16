@@ -17,7 +17,7 @@ class Jabatan extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->integer('gaji_pokok');
-            $table->integer('bonus_profesional')->nullable($value = true);
+            $table->bigInteger('bonus_profesional')->nullable($value = true);
             $table->timestamps();
         });
     }

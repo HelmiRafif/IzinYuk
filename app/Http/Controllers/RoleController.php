@@ -39,7 +39,7 @@ class RoleController extends Controller
             'guard_name' => 'required',
         ]);
         
-        $role = Role::create(['name' => $request->input('name')]);
+        $role = Role::create(['name' => $request->input('name'), 'guard_name' => $request->input('guard_name')]);
         $role->syncPermissions($request->input('permission'));
         // $roleid->syncUser($request->input('role_id'));
     

@@ -62,14 +62,6 @@
                 {!! Form::textarea('keterangan', null, array('placeholder' => 'Berikan keterangan izin','class' => 'form-control', 'rows' => '3','id' => 'ket')) !!}
             </div>
 
-            <div class="form-group">                
-                <label for="exampleSelectBorder">Pegawai mana</label>
-                <select class="custom-select form-control-border" id="exampleSelectBorder" name="pegawai_id">                
-                    @foreach($pegawai as $value)
-                        <option value={{ $value['id'] }}>{{ $value['nama'] }}</option>                    
-                    @endforeach
-                </select>
-            </div>
         </div>
         <!-- /.card-body -->
 

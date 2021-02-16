@@ -19,6 +19,12 @@ class izin extends Model
         'keterangan',
     ];
 
+    public function username($id)
+    {
+        $username = pegawai::find($id);
+        return $username->nama;
+    }
+
     public function izin()
     {
         return $this->belongsToMany(pegawai::class);

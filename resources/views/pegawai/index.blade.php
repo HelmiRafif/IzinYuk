@@ -25,13 +25,14 @@
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
-                <thead>
+                <thead class="text-center">
                     <tr>
-                    <th>No</th>
+                    <th>#</th>
+                    <th>Username</th>
                     <th>Nama Pegawai</th>
                     <th>Email</th>
                     <th>Alamat</th>
-                    <th>Tanggal Msauk</th>
+                    <th>Tanggal Masuk</th>
                     <th>Rekening</th>
                     <th>Tipe Pegawai</th>
                     <th>Bank ID</th>
@@ -40,10 +41,11 @@
                     <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     @foreach ($pegawai as $row)
                         <tr>
                         <td>{{ ++$i }}</td>
+                        <td>{{ $row->username($row->user_id) }}</td>
                         <td>{{ $row->nama }}</td>
                         <td>{{ $row->email}}</td>
                         <td>{{ $row->alamat}}</td>
@@ -52,7 +54,7 @@
                         <td>{{ $row->type_pegawai}}</td>
                         <td>{{ $row->bank_id}}</td>
                         <td>{{ $row->jabatanName($row->jabatan_id)}}</td>
-                        <td>{{ $row->bonus_loyalitas}}</td>
+                        <td>{{ $row->jabatanBonus($row->jabatan_id)}}</td>
                         {{-- <td>{{ $row->jabatanBonus($row->bonus_loyalitas) }}</td> --}}
                         <td>
                             <a class="btn btn-info" href="{{ route('pegawai.show',$row->id) }}">Show</a>

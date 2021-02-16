@@ -115,7 +115,7 @@ class JabatanController extends Controller
      */
     public function destroy($id)
     {
-        $id->delete();
+        DB::table("jabatans")->where('id',$id)->delete();
     
         return redirect()->route('jabatan.index')
                         ->with('success','Berhasil hapus jabatan');

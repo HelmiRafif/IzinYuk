@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\pegawai;
 use App\Models\jabatan;
+use Illuminate\Support\Facades\Auth;
 use App\Models\permission;
 use DB;
 
@@ -45,6 +46,17 @@ class PegawaiController extends Controller
      */
     public function store(Request $request)
     {
+        // $session_id = session()->get('users')->id;
+        // dd($session_id);
+        $this->validate($request, [
+            'nama' => 'required',
+            'email' => 'required',
+            'alamat' => 'required',
+            'rekening' => 'required',
+            'type_pegawai' => 'required',
+            'bank_id' => 'required',
+            'jabatan_id' => 'required'
+        ]);
         $data = new pegawai([
             'nama' => $request->get('nama'),
             'email' => $request->get('email'),
@@ -52,9 +64,12 @@ class PegawaiController extends Controller
             'rekening' => $request->get('rekening'),
             'type_pegawai' => $request->get('type_pegawai'),
             'bank_id' => $request->get('bank_id'),
-            'jabatan_id' => $request->get('jabatan_id')
-        ]);
+            'jabatan_id' => $request->get('jabatan_id'),
+            // 'session_id' => $session_id->get()
+            ]);
+        $data['user_id'] = Auth::user()->id;        
         $data->save();
+
 
 
         // $this->validate($request, [
@@ -135,7 +150,7 @@ class PegawaiController extends Controller
      */
     public function destroy($id)
     {
-        $id->delete();
+        DB::table("pegawais")->where('id',$id)->delete();
     
         return redirect()->route('pegawai.index')
                         ->with('success','Berhasil hapus pegawai');

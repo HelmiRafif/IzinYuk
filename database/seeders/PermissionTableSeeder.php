@@ -40,6 +40,14 @@ class PermissionTableSeeder extends Seeder
             'potongan-create',
             'potongan-edit',
             'potongan-delete',
+            'pegawai-list',
+            'pegawai-create',
+            'pegawai-edit',
+            'pegawai-delete',
+            'izin-list',
+            'izin-create',
+            'izin-edit',
+            'izin-delete',
         ];
 
         foreach ($permissions as $permission) {

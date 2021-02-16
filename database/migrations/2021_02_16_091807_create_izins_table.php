@@ -20,11 +20,11 @@ class CreateIzinsTable extends Migration
             $table->string('keterangan');
             $table->string('type_izin');
             $table->string('status_diterima')->nullable();
-            $table->unsignedBigInteger('pegawai_id');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
-            $table->foreign('pegawai_id')
-                ->references('id')
+            $table->foreign('user_id')
+                ->references('user_id')
                 ->on('pegawais')
                 ->onDelete('cascade');
         });

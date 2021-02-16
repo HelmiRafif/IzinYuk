@@ -19,13 +19,26 @@ class pegawai extends Model
         'type_pegawai',
         'bank_id',
         'jabatan_id',
-        'bonus_loyalitas'
+        'bonus_loyalitas',
+        'session_id'
     ];
 
     public function jabatanName($id)
     {
-        $jabatanName = jabatan::find($id);
-        return $jabatanName->name;
+        $jabatan = jabatan::find($id);
+        return $jabatan->name;
+    }
+
+    public function jabatanBonus($id)
+    {
+        $jabatan = jabatan::find($id);
+        return $jabatan->bonus_profesional;
+    }
+
+    public function username($id)
+    {
+        $username = user::find($id);
+        return $username->name;
     }
 
     // public function jabatanBonus($id)

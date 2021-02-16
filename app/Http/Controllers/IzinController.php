@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Doctrine\DBAL\Schema\Table;
 use App\Models\izin;
 use App\Models\pegawai;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class IzinController extends Controller
 {
@@ -32,8 +34,7 @@ class IzinController extends Controller
     public function create(Request $request)
     {
         $izin = izin::get();
-        $pegawai = pegawai::get()->toArray();
-        return view('izin.add-izin', compact('pegawai'));
+        return view('izin.add-izin', compact('izin'));
     }
 
     /**
@@ -44,13 +45,20 @@ class IzinController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [            
+            'type_izin' => 'required',
+            'tanggal_mulai' => 'required',
+            'tanggal_selesai' => 'required',
+            'keterangan' => 'required'
+        ]);
+
         $data = new izin([ 
-        'pegawai_id'=> $request->get('pegawai_id'),
         'type_izin'=> $request->get('type_izin'),
         'tanggal_mulai'=> $request->get('tanggal_mulai'),
         'tanggal_selesai'=> $request->get('tanggal_selesai'),
         'keterangan'=> $request->get('keterangan'),
         ]);
+        $data['user_id'] = Auth::user()->id;
         $data->save();
 
         // $this->validate($request, [
@@ -124,8 +132,8 @@ class IzinController extends Controller
      */
     public function destroy($id)
     {
-        $id->delete();
-    
+        DB::table("izins")->where('id',$id)->delete();
+
         return redirect()->route('izin.index')
                         ->with('success','Berhasil hapus data izin');
     }

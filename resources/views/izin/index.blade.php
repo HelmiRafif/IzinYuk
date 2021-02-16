@@ -21,9 +21,9 @@
                     <table class="table table-hover text-nowrap">
                     <thead>
                         <tr>
-                        <th>No</th>                    
+                        <th>No</th>
+                        <th>Nama Pegawai</th>
                         <th>ID Perizinan</th>
-                        <th>Pegawai ID</th>
                         <th>Tipe Izin</th>
                         <th>Keterangan</th>
                         <th>Tanggal Mulai</th>
@@ -36,8 +36,8 @@
                         @foreach ($izin as $row)
                             <tr>
                             <td>{{ ++$i }}</td>
+                            <td>{{ $row->username($row->user_id) }}</td>
                             <td>{{ $row->id }}</td>
-                            <td>{{ $row->pegawai_id }}</td>
                             <td>{{ $row->type_izin }}</td>
                             <td>{{ $row->keterangan }}</td>
                             <td>{{ $row->tanggal_mulai }}</td>

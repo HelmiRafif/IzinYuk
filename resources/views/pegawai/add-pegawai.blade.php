@@ -53,11 +53,12 @@
             </div>            
             <div class="form-group">                
                 <label for="exampleSelectBorder">Jabatan</label>
-                <select class="custom-select form-control-border" id="exampleSelectBorder" name="jabatan_id">                
+                <select class="custom-select form-control-border" id="exampleSelectBorder" name="jabatan_id">              
                     @foreach($jabatan as $value)
                         <option value={{ $value['id'] }}>{{ $value['name'] }}</option>                    
                     @endforeach
                 </select>
+                <input type="hidden" name="session_id" value="{{Auth::id()}}"><br />
             </div>
 
             {{-- <div class="form-group">
