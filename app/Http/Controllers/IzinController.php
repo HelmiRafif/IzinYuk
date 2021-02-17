@@ -16,6 +16,7 @@ class IzinController extends Controller
         $this->middleware('permission:izin-list|izin-create|izin-edit|izin-delete', ['only' => ['index','store']]);
         $this->middleware('permission:izin-create', ['only' => ['create','store']]);
         $this->middleware('permission:izin-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:izin-admit', ['only' => ['admit']]);
         $this->middleware('permission:izin-delete', ['only' => ['destroy']]);
     }
 
@@ -122,6 +123,17 @@ class IzinController extends Controller
     
         return redirect()->route('izin.index')
                         ->with('success','Berhasil update izin');
+    }
+
+    public function admit(Request $request, $id)
+    {
+        // $data = DB::table('izins')->select('status_diterima')->get()->toArray();
+        $izin = izin::find($id);
+        $izin->status_diterima = $request->input('status_diterima');
+        $izin->save();
+
+        return redirect()->route('izin.index')
+                        ->with('success','Berhasil approve izin');
     }
 
     /**

@@ -58,7 +58,7 @@
                         <option value={{ $value['id'] }}>{{ $value['name'] }}</option>                    
                     @endforeach
                 </select>
-                <input type="hidden" name="session_id" value="{{Auth::id()}}"><br />
+                <input type="hidden" name="session_id" value="{{Auth::id()}} "><br />
             </div>
 
             {{-- <div class="form-group">

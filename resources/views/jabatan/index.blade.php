@@ -24,7 +24,7 @@
             <div class="card ">
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
-                    <thead>
+                    <thead class="text-center">
                         <tr>
                         <th>No</th>
                         <th>Nama Jabatan</th>
@@ -33,7 +33,7 @@
                         <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                         @foreach ($jabatan as $row)
                             <tr>
                             <td>{{ ++$i }}</td>

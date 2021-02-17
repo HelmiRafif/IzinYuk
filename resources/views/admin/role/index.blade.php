@@ -27,14 +27,14 @@
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap">
-                <thead>
+                <thead class="text-center">
                     <tr>
                     <th>No</th>                    
                     <th>Name</th>
                     <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                     @foreach ($roles as $key => $role)
                         <tr>
                         <td>{{ $role->id }}</td>                        

@@ -22,7 +22,7 @@
                 <!-- /.card-header -->
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
-                    <thead>
+                    <thead class="text-center">
                         <tr>
                         <th>ID</th>
                         <th>Nama</th>
@@ -30,7 +30,7 @@
                         <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
                     @foreach($permissions as $row)
                         <tr>
                         <td>{{ $row->id }}</td>

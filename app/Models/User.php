@@ -46,6 +46,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function user()
+    {
+        $this->belongsTo(pegawai::class);
+    }
+
     // public function roleid()
     // {
     //     return $this->hasMany(role::class);

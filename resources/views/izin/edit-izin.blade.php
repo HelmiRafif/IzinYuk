@@ -18,24 +18,42 @@
 @stop
 
 @section('content')
-    {!! Form::model($role, ['method' => 'PATCH','route' => ['roles.update', $role->id]]) !!}
+    {!! Form::model($izin, ['method' => 'PATCH','route' => ['izin.update', $izin->id]]) !!}
     {{ csrf_field() }}
 
         <div class="card-body">
-            <div class="form-group">
-                <label for="name">Nama</label>
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','id' => 'name')) !!}
+            <div class="form-group pb-3">
+                <label for="exampleSelectRounded0">Tipe Izin</label>
+                <select class="custom-select rounded-0" id="exampleSelectRounded0" name="type_izin">
+                    <option selected disabled style="display:none">Tipe Perizinan</option>
+                    <option Value="sakit">Sakit</option>
+                    <option Value="sakit">Hal Penting</option>
+                    <option Value="cuti hamil">Cuti Hamil</option>    
+                    <option Value="cuti tahunan">Cuti Tahunan</option>
+                    <option Value="cuti besar">Cuti Besar</option>
+                </select>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
-                <div class="form-group">
-                    <br/>
-                    @foreach($permission as $value)
-                        <label>{{ Form::checkbox('permission[]', $value->id, in_array($value->id, $rolePermissions) ? true : false, array('class' => 'name')) }}
-                        {{ $value->name }}</label>
-                    <br/>
-                    @endforeach
 
+            <div class="row pb-2">
+                <div class="col">
+                    <div class="form-group">
+                    <label>Tanggal Mulai : </label>
+                    {!! Form::date('tanggal_mulai', \Carbon\Carbon::now()); !!}
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-group">
+                    <label>Tanggal Selesai : </label>
+                    {!! Form::date('tanggal_selesai', \Carbon\Carbon::now()); !!}
+                    </div>
+                </div>
             </div>
+            <div class="form-group">
+                <label for="name">Keterangan</label>
+                {!! Form::textarea('keterangan', null, array('placeholder' => 'Berikan keterangan izin','class' => 'form-control','id' => 'name','rows' => '3')) !!}
+            </div>
+            
         </div>
         <!-- /.card-body -->
 

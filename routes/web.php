@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
@@ -28,7 +29,7 @@ Auth::routes();
 Route::get('/', function () {
     return view('welcome');
 });
-
+Route::patch('izin/{id}/setujui','App\Http\Controllers\IzinController@admit')->name('izin.admit');
 Route::get('/home', [Controller::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
@@ -40,9 +41,12 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('potongan',PotonganController::class);
     Route::resource('pegawai',PegawaiController::class);
     Route::resource('izin',IzinController::class);
+    // Route::resource('dashboard',DashboardController::class);
 
     Route::get('/dashboard', function(){
         return view('admin.dashboard');
+
+    
 
     });
 });

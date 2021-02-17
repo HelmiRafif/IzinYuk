@@ -27,6 +27,6 @@ class izin extends Model
 
     public function izin()
     {
-        return $this->belongsToMany(pegawai::class);
+        return $this->belongsTo(pegawai::class);
     }
 }
