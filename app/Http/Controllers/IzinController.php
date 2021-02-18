@@ -117,8 +117,9 @@ class IzinController extends Controller
         $izin = izin::find($id);
         $izin->type_izin = $request->input('type_izin');
         $izin->tanggal_mulai = $request->input('tanggal_mulai');
-        $izin->tangal_selesai = $request->input('tanggal_selesai');
+        $izin->tanggal_selesai = $request->input('tanggal_selesai');
         $izin->keterangan = $request->input('keterangan');
+        $izin->status_diterima = $request->input('status_diterima');
         $izin->save();
     
         return redirect()->route('izin.index')

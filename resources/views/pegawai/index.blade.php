@@ -28,7 +28,6 @@
                 <thead class="text-center">
                     <tr>
                     <th>#</th>
-                    <th>Username</th>
                     <th>Nama Pegawai</th>
                     <th>Email</th>
                     <th>Alamat</th>
@@ -45,7 +44,6 @@
                     @foreach ($pegawai as $row)
                         <tr>
                         <td>{{ ++$i }}</td>
-                        <td>{{ $row->username($row->user_id) }}</td>
                         <td>{{ $row->nama }}</td>
                         <td>{{ $row->email}}</td>
                         <td>{{ $row->alamat}}</td>

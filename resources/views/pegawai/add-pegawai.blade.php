@@ -5,14 +5,33 @@
 @section('content_header')
     <h1>Data Pegawai</h1>
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+            </ul>
+        </div>
+    @endif
+
     @if ($message = Session::get('error'))
         <div class="alert alert-error">
             <p>{{ $message }}</p>
         </div>
     @endif
+
+    @if ($message = Session::get('warning'))
+        <div class="alert alert-warning text-white">
+            <p>{{ $message }}</p>
+        </div>
+    @endif
+
 @stop
 
 @section('content')
+    @can('pegawai-biodata')
     {!! Form::open(array('route' => 'pegawai.store','method'=>'POST')) !!}
         <div class="card-body mx-auto" style="width:1080px">
             <div class="row">
@@ -47,6 +66,7 @@
                     </div>
                 </div>
             </div>
+            @can('pegawai-edit')
             <div class="form-group">
                 <label for="tipePegawai">Tipe Pegawai</label>
                 {!! Form::text('type_pegawai', null, array('placeholder' => 'Tipe Pegawai','class' => 'form-control','id' => 'tipePegawai')) !!}
@@ -55,11 +75,12 @@
                 <label for="exampleSelectBorder">Jabatan</label>
                 <select class="custom-select form-control-border" id="exampleSelectBorder" name="jabatan_id">              
                     @foreach($jabatan as $value)
-                        <option value={{ $value['id'] }}>{{ $value['name'] }}</option>                    
+                        <option value={{ $value['id'] }}>{{ $value['name'] }}</option>
                     @endforeach
                 </select>
                 <input type="hidden" name="session_id" value="{{Auth::id()}} "><br />
             </div>
+            @endcan
 
             {{-- <div class="form-group">
                 <strong>Jabatan</strong><br>       
@@ -77,6 +98,7 @@
             <button type="submit" class="btn btn-primary">Submit</button>
         </div>
     {!! Form::close() !!}
+    @endcan
 @stop
                 
 @section('css')

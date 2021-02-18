@@ -15,8 +15,7 @@ class CreatePegawaisTable extends Migration
     public function up()
     {
         Schema::create('pegawais', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('id')->primary();
             $table->string('nama');
             $table->string('email')->unique();
             $table->text('alamat')->nullable($value = true);
@@ -33,7 +32,7 @@ class CreatePegawaisTable extends Migration
                 ->on('jabatans')
                 ->onDelete('SET NULL');
 
-            $table->foreign('user_id')
+            $table->foreign('id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');

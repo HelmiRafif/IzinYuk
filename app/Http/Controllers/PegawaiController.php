@@ -17,6 +17,7 @@ class PegawaiController extends Controller
         $this->middleware('permission:pegawai-list|pegawai-create|pegawai-edit|pegawai-delete', ['only' => ['index','store']]);
         $this->middleware('permission:pegawai-create', ['only' => ['create','store']]);
         $this->middleware('permission:pegawai-edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:pegawai-biodata', ['only' => ['biodata']]);
         $this->middleware('permission:pegawai-delete', ['only' => ['destroy']]);
     }
 
@@ -26,6 +27,27 @@ class PegawaiController extends Controller
         return view('pegawai.index',compact('pegawai'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
+
+    public function list()
+    {
+        $id = Auth::user()->id;
+        $pegawai = pegawai::find($id);
+        $show = DB::table('pegawais')->where('id',$id)->count();
+
+        if ($show == 0) {
+            return redirect()->route('pegawai.create')->with('warning','Anda belum memiliki biodata pegawai, Isi biodata anda');
+        }
+        else {
+            return view('pegawai.show', compact('pegawai','show','id'));
+        };
+    }
+
+    public function biodata()
+    {
+        $id = Auth::user()->id;
+        $pegawai = pegawai::find($id);
+        return view('pegawai.edit-pegawai',compact('pegawai'));
+    }
     
     /**
      * Show the form for creating a new resource.
@@ -34,7 +56,7 @@ class PegawaiController extends Controller
      */
     public function create(Request $request)
     {
-        $jabatan = jabatan::get()->toArray();        
+        $jabatan = jabatan::get()->toArray();
         return view('pegawai.add-pegawai', compact('jabatan'));
     }
 
@@ -53,10 +75,8 @@ class PegawaiController extends Controller
             'email' => 'required',
             'alamat' => 'required',
             'rekening' => 'required',
-            'type_pegawai' => 'required',
-            'bank_id' => 'required',
-            'jabatan_id' => 'required'
         ]);
+        $data = $request->all();
         $data = new pegawai([
             'nama' => $request->get('nama'),
             'email' => $request->get('email'),
@@ -67,7 +87,8 @@ class PegawaiController extends Controller
             'jabatan_id' => $request->get('jabatan_id'),
             // 'session_id' => $session_id->get()
             ]);
-        $data['user_id'] = Auth::user()->id;        
+        $data['id'] = Auth::user()->id;
+
         $data->save();
 
 
@@ -85,7 +106,7 @@ class PegawaiController extends Controller
         // $input = $request->all();
         // pegawai::create($input);
         
-        return redirect()->route('pegawai.index')->with('success','Berhasil menambah pegawai');
+        return redirect()->route('pegawai.biodata')->with('success','Berhasil menambah pegawai');
     }
 
     /**
@@ -109,7 +130,8 @@ class PegawaiController extends Controller
     public function edit($id)
     {
         $pegawai = pegawai::find($id);
-        return view('pegawai.edit-pegawai',compact('pegawai'));
+        $jabatan = jabatan::get();
+        return view('pegawai.edit-pegawai',compact('pegawai','jabatan'));
     }
 
     /**

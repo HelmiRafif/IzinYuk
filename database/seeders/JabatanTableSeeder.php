@@ -16,7 +16,7 @@ class JabatanTableSeeder extends Seeder
     public function run()
     {
         $jabatans = [
-            'Admin',
+            'Programmer',
         ];
 
         foreach ($jabatans as $jabatan) {

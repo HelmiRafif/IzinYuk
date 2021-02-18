@@ -29,7 +29,6 @@ Auth::routes();
 Route::get('/', function () {
     return view('welcome');
 });
-Route::patch('izin/{id}/setujui','App\Http\Controllers\IzinController@admit')->name('izin.admit');
 Route::get('/home', [Controller::class, 'index'])->name('home');
 
 Route::group(['middleware' => ['auth']], function() {
@@ -39,14 +38,18 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('jabatan',JabatanController::class);
     Route::resource('tunjangan',TunjanganController::class);
     Route::resource('potongan',PotonganController::class);
+    Route::get('/pegawai/biodata','App\Http\Controllers\PegawaiController@biodata')->name('pegawai.biodata');
+    Route::get('/pegawai/data','App\Http\Controllers\PegawaiController@list')->name('pegawai.data');
     Route::resource('pegawai',PegawaiController::class);
     Route::resource('izin',IzinController::class);
+
+    Route::patch('izin/{id}/setujui','App\Http\Controllers\IzinController@admit')->name('izin.admit');
     // Route::resource('dashboard',DashboardController::class);
 
     Route::get('/dashboard', function(){
         return view('admin.dashboard');
 
-    
+
 
     });
 });

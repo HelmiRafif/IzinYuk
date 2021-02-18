@@ -18,7 +18,7 @@ class PegawaiTableSeeder extends Seeder
     public function run()
     {
         $pegawai = Pegawai::create([
-            'nama' => 'Erik Samsul',
+            'name' => 'Erik Samsul',
             'email' => 'eriksam@gmail.com',
         ]);
 

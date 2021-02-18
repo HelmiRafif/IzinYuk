@@ -230,11 +230,6 @@ return [
             'topnav' => true,
         ],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
             'text' => 'Dashboard',
             'url'  => '/dashboard',
             'icon' => 'fas fa-fw fa-globe',
@@ -246,51 +241,72 @@ return [
                 [
                 'text' => 'Data Perizinan',
                 'route' => 'izin.index',
+                'can' => 'izin-list'
             ],
             [
                 'text' => 'Buat Perizinan',                
-                'route' => 'izin.create'
-            ], 
+                'route' => 'izin.create',
+                'can' => 'izin-create'
+            ],
+            [
+                'text' => 'Perizinan Anda',                
+                'route' => 'izin.create',
+                'can' => 'izin-detail'
+            ],
             ],
         ],
         ['header' => 'account_settings'],
         [
             'text' => 'Manage User',
             'icon' => 'fas fa-fw fa-user',
+            'can' => ['user-list','role-list','permission-list'],
             'submenu' => [
                 [
                 'text' => 'Data User',
                 'route' => 'users.index',
+                'can' => 'user-list'
             ],
             [
                 'text' => 'Role',
                 'route' => 'roles.index',
+                'can' => 'role-list'
             ],
             [
                 'text' => 'Permission',
                 'route' => 'permissions.index',
+                'can' => 'permission-list'
             ],
             ],
         ],
         [
             'text' => 'Kepegawaian',
             'icon' => 'fas fa-fw fa-table',
+            'can' => ['pegawai-list','pegawai-biodata','jabatan-list','tunjangan-list','potongan-list','pegawai-biodata'],
             'submenu' => [
                 [
                 'text' => 'Pegawai',
                 'route' => 'pegawai.index',
+                'can' => 'pegawai-list'
+            ],
+            [
+                'text' => 'Biodata',
+                'route' => 'pegawai.data',
+                'can' => 'pegawai-biodata'
             ],
             [
                 'text' => 'Jabatan',
                 'route' => 'jabatan.index',
+                'can' => 'jabatan-list'
             ],
             [
                 'text' => 'Tunjangan',
                 'route' => 'tunjangan.index',
+                'can' => 'tunjangan-list'
             ],
             [
                 'text' => 'Potongan',
                 'route' => 'potongan.index',
+                'can' => 'potongan-list'
             ],
             ],
         ],       

@@ -18,13 +18,24 @@
 @stop
 
 @section('content')
-    {!! Form::model($jabatan, ['method' => 'PATCH','route' => ['jabatan.update', $jabatan->id]]) !!}
+    {!! Form::model($pegawai, ['method' => 'PATCH','route' => ['pegawai.update', $pegawai->id]]) !!}
     {{ csrf_field() }}
 
+        @can('pegawai-biodata')
         <div class="card-body">
-            <div class="form-group">
-                <label for="name">Nama</label>
-                {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','id' => 'name',)) !!}
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="namaPegawai">Nama Pegawai</label>
+                        {!! Form::text('nama', null, array('placeholder' => 'Nama Pegawai','class' => 'form-control','id' => 'namaPegawai')) !!}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control','id' => 'email')) !!}
+                    </div>
+                </div>
             </div>
 
             <div class="form-group">
@@ -36,10 +47,52 @@
                 <label for="gajiProfesional">Bonus Profesional</label>
                 {!! Form::text('bonus_profesional', null, array('placeholder' => 'Bonus Profesional','class' => 'form-control','id' => 'gajiProfesional')) !!}
             </div>
+            <div class="form-group">
+                <label for="alamat">Alamat</label>
+                {!! Form::text('alamat', null, array('placeholder' => 'Alamat','class' => 'form-control','id' => 'alamat')) !!}
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="bank">Bank ID</label>
+                        {!! Form::text('bank_id', null, array('placeholder' => 'Bank ID','class' => 'form-control','id' => 'bank')) !!}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="rekening">Nomor Rekening</label>
+                        {!! Form::text('rekening', null, array('placeholder' => 'Rekening','class' => 'form-control','id' => 'rekening')) !!}
+                    </div>
+                </div>
+            </div>
+
+            @can('pegawai-edit')
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">                
+                        <label for="exampleSelectBorder">Jabatan</label>
+                        <select class="custom-select form-control-border" id="exampleSelectBorder" name="jabatan_id">              
+                            @foreach($jabatan as $value)
+                                <option value={{ $value['id'] }}>{{ $value['name'] }}</option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="session_id" value="{{Auth::id()}} "><br />
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="tipePegawai">Tipe Pegawai</label>
+                        {!! Form::text('type_pegawai', null, array('placeholder' => 'Tipe Pegawai','class' => 'form-control','id' => 'tipePegawai')) !!}
+                    </div>
+                </div>
+            </div>
+            @endcan
+            </div>
         </div>
+        @endcan
         <!-- /.card-body -->
 
-        <div class="card-footer">
+        <div class="card-footer mb-3">
             <button type="submit" class="btn btn-primary">Update</button>
         </div>
     {!! Form::close() !!}

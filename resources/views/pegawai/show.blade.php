@@ -3,7 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Detail Potongan</h1>    
+    <h1>Detail Pegawai</h1>    
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -14,28 +14,53 @@
 @stop
 
 @section('content')
-
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Name :</strong>
-                    {{ $potongan->name }}
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Gaji Pokok :</strong>
-                {{ $potongan->gaji_pokok }}    
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-right">
-                <a class="btn btn-primary" href="{{ route('potongan.index') }}"> Back</a>
-            </div>
-        </div>
+    <div class="card">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <th>Nama</th>
+                    <td>:</td>
+                    <td>{{ $pegawai->nama }}</td>
+                </tr>
+                <tr>
+                    <th>Username</th>
+                    <td>:</td>
+                    <td>{{ $pegawai->username($pegawai->id) }}</td>
+                </tr>
+                <tr>
+                    <th>Email</th>
+                    <td>:</td>
+                    <td>{{ $pegawai->email }}</td>
+                </tr>
+                <tr>
+                    <th>Alamat</th>
+                    <td>:</td>
+                    <td>{{ $pegawai->alamat }}</td>
+                </tr>
+                <tr>
+                    <th>Tanggal Masuk</th>
+                    <td>:</td>
+                    <td>
+                        @if(!empty($row->tanggal_masuk))
+                        {{ $pegawai->tanggal_masuk }}
+                            @else
+                            Sedang tidak melakukan izin
+                        @endif
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>
+                        <a class="btn btn-warning" href="{{ route('pegawai.edit',Auth::user()->id) }}">Edit biodata</a>
+                    </th>
+                    <th>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 @stop
 

@@ -53,7 +53,11 @@
                 <label for="name">Keterangan</label>
                 {!! Form::textarea('keterangan', null, array('placeholder' => 'Berikan keterangan izin','class' => 'form-control','id' => 'name','rows' => '3')) !!}
             </div>
-            
+
+            <div class="form-group">
+                <label for="status">Batalkan status diterima :</label>
+                <input type="checkbox" id="status" name="status_diterima" value="">
+            </div>
         </div>
         <!-- /.card-body -->
 

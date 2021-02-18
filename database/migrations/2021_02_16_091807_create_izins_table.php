@@ -15,16 +15,16 @@ class CreateIzinsTable extends Migration
     {
         Schema::create('izins', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
             $table->date('tanggal_mulai');
             $table->date('tanggal_selesai');
             $table->string('keterangan');
             $table->string('type_izin');
             $table->string('status_diterima')->nullable();
-            $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
             $table->foreign('user_id')
-                ->references('user_id')
+                ->references('id')
                 ->on('pegawais')
                 ->onDelete('cascade');
         });

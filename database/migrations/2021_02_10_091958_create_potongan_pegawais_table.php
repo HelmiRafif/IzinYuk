@@ -14,7 +14,7 @@ class CreatePotonganPegawaisTable extends Migration
     public function up()
     {
         Schema::create('potongan_pegawais', function (Blueprint $table) {
-            $table->bigIncrements('pegawai_id');
+            $table->unsignedBigInteger('pegawai_id')->primary();
             $table->integer('total_potongan');
             $table->date('periode_potongan');
             $table->timestamps();
