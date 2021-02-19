@@ -17,6 +17,7 @@ class IzinController extends Controller
         $this->middleware('permission:izin-create', ['only' => ['create','store']]);
         $this->middleware('permission:izin-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:izin-admit', ['only' => ['admit']]);
+        $this->middleware('permission:izin-detail', ['only' => ['detail']]);
         $this->middleware('permission:izin-delete', ['only' => ['destroy']]);
     }
 
@@ -32,6 +33,14 @@ class IzinController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function detail()
+    {
+        $id = Auth::user()->id;
+        $izin = izin::select()->where('user_id',$id)->get();
+        return view('izin.show',compact('izin'));
+    }
+
     public function create(Request $request)
     {
         $izin = izin::get();

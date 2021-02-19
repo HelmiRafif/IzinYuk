@@ -5,12 +5,6 @@
 @section('content_header')
     <h1>Data Perizinan</h1>    
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
 @stop
 
 @section('content')
@@ -23,9 +17,7 @@
                         <tr>
                         <th>#</th>
                         <th>ID User</th>
-                        <th>ID Perizinan</th>
                         <th>Tipe Izin</th>
-                        <th>Keterangan</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
                         <th>Status</th>
@@ -37,9 +29,7 @@
                             <tr>
                             <td>{{ ++$i }}</td>
                             <td>{{ $row->user_id }}</td>
-                            <td>{{ $row->id }}</td>
                             <td>{{ $row->type_izin }}</td>
-                            <td>{{ $row->keterangan }}</td>
                             <td>{{ $row->tanggal_mulai }}</td>
                             <td>{{ $row->tanggal_selesai }}</td>
                             <td> 
@@ -49,26 +39,30 @@
                                             <label class="badge badge-success">{{ $row->status_diterima }}</label>
                                 @endif
                             </td>
-                            <td>
-                                <a class="btn btn-info" href="{{ route('izin.show',$row->id) }}">Show</a>
-                                @can('izin-edit')
-                                    <a class="btn btn-primary" href="{{ route('izin.edit',$row->id) }}">Edit</a>
-                                @endcan
-                                @can('izin-admit')
-                                    @if(!empty($row->status_diterima))
-                                        @else
-                                            {!! Form::open(['method' => 'PATCH' ,'route' => ['izin.admit',$row->id]]) !!}
-                                                <button class="btn btn-success" type="submit" name="status_diterima" value="Diterima">
-                                                Setujui
-                                                </button>
-                                            {!! Form::close() !!}
-                                    @endif
-                                @endcan
-                                @can('izin-delete')
-                                    {!! Form::open(['method' => 'DELETE','route' => ['izin.destroy', $row->id],'style'=>'display:inline']) !!}
-                                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-                                    {!! Form::close() !!}
-                                @endcan
+                            <td class="text-center">
+                                <div class="row">
+                                    <a class="btn btn-sm-2 btn-primary m-2" title="Detail" href="{{ route('izin.show',$row->id) }}"><i class="fa fa-info"></i></a>
+                                    @can('izin-edit')
+                                        <a class="btn btn-sm-2 btn-warning m-2" title="Edit" href="{{ route('izin.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
+                                    @endcan
+                                    @can('izin-delete')
+                                        {!! Form::open(['method' => 'DELETE','route' => ['izin.destroy', $row->id],'style'=>'display:inline']) !!}
+                                            <button type="submit" class="btn btn-sm-2 btn-danger m-2" title="Hapus">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        {!! Form::close() !!}
+                                    @endcan
+                                    @can('izin-admit')
+                                        @if(!empty($row->status_diterima))
+                                            @else
+                                                {!! Form::open(['method' => 'PATCH' ,'route' => ['izin.admit',$row->id]]) !!}
+                                                    <button class="btn btn-sm-2 btn-success m-2" title="Approve" type="submit" name="status_diterima" value="Diterima">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                {!! Form::close() !!}
+                                        @endif
+                                    @endcan
+                                </div>
                             </td>
                             </tr>
                         @endforeach

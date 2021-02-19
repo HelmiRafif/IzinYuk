@@ -102,7 +102,42 @@
     @endif
 
     {{-- Custom Scripts --}}
-    @yield('adminlte_js')
+    @yield('adminlte_js')  
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script type="text/javascript">
+
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3500,
+            timerProgressBar: true
+        })
+
+        @if($message = Session::get('success')){
+            Toast.fire({
+            icon: 'success',
+            title: '{{ $message }}'
+            })
+        }
+        @endif
+
+        @if($message = Session::get('warning')){
+            Toast.fire({
+            icon: 'warning',
+            title: '{{ $message }}'
+            })
+        }
+        @endif
+
+        @if($errors->any()){
+            Toast.fire({
+            icon: 'error',
+            html: '<ul> @foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach </ul>'
+            })
+        }
+        @endif
+    </script>
 
 </body>
 

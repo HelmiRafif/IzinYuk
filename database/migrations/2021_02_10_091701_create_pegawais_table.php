@@ -22,7 +22,7 @@ class CreatePegawaisTable extends Migration
             $table->date('tanggal_masuk')->nullable();
             $table->string('rekening')->nullable($value = true);
             $table->string('type_pegawai')->nullable($value = true);
-            $table->unsignedBigInteger('bank_id')->nullable($value = true);
+            $table->string('bank_id')->nullable($value = true);
             $table->unsignedBigInteger('jabatan_id')->nullable();
             $table->unsignedBigInteger('bonus_loyalitas')->nullable($value = true);
             $table->timestamps();

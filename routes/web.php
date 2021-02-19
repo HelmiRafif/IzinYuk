@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/pegawai/biodata','App\Http\Controllers\PegawaiController@biodata')->name('pegawai.biodata');
     Route::get('/pegawai/data','App\Http\Controllers\PegawaiController@list')->name('pegawai.data');
     Route::resource('pegawai',PegawaiController::class);
+    Route::get('/izin/detail','App\Http\Controllers\IzinController@detail')->name('izin.detail');
+    Route::get('/izin/modify', 'App\Http\Controllers\IzinController@modify')->name('izin.modify');
     Route::resource('izin',IzinController::class);
 
     Route::patch('izin/{id}/setujui','App\Http\Controllers\IzinController@admit')->name('izin.admit');

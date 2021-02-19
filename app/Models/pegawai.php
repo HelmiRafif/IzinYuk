@@ -27,13 +27,17 @@ class pegawai extends Model
     public function jabatanName($id)
     {
         $jabatan = jabatan::find($id);
-        return $jabatan->name;
+        if (!empty($jabatan)) {
+            return $jabatan->name;
+        };
     }
 
     public function jabatanBonus($id)
     {
         $jabatan = jabatan::find($id);
-        return $jabatan->bonus_profesional;
+        if (!empty($jabatan)) {
+            return $jabatan->bonus_profesional;
+        };
     }
 
     public function username($id)

@@ -4,11 +4,6 @@
 
 @section('content_header')
     <h1>Data User</h1>
-    @if(session('status'))
-        <div class="alert alert-success" role="alert">
-            {{ session('status') }}
-        </div>
-    @endif
 @stop
 
 @section('content')
@@ -47,11 +42,13 @@
                         </td>
                         <td>
                             @can('user-edit')
-                                <a class="btn btn-primary" href="{{ route('users.edit',$row->id) }}">Edit</a>
+                                <a class="btn btn-warning" href="{{ route('users.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan
                             @can('user-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $row->id],'style'=>'display:inline']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                    <button type="submit" class="btn btn-sm-2 btn-danger m-2" title="Hapus">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 {!! Form::close() !!}
                             @endcan
                         </td>

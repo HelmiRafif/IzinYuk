@@ -3,14 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Show Role</h1>    
-
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
+    <h1>Show Role</h1>
 @stop
 
 @section('content')

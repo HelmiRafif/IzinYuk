@@ -5,12 +5,6 @@
 @section('content_header')
     <h1>List Data Pegawai</h1>    
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
 @stop
 
 @section('content')
@@ -40,28 +34,36 @@
                     <th>Action</th>
                     </tr>
                 </thead>
-                <tbody class="text-center">
+                <tbody class="text-center align-middle">
                     @foreach ($pegawai as $row)
                         <tr>
-                        <td>{{ ++$i }}</td>
-                        <td>{{ $row->nama }}</td>
-                        <td>{{ $row->email}}</td>
-                        <td>{{ $row->alamat}}</td>
-                        <td>{{ $row->tanggal_masuk}}</td>
-                        <td>{{ $row->rekening}}</td>
-                        <td>{{ $row->type_pegawai}}</td>
-                        <td>{{ $row->bank_id}}</td>
-                        <td>{{ $row->jabatanName($row->jabatan_id)}}</td>
-                        <td>{{ $row->jabatanBonus($row->jabatan_id)}}</td>
+                        <td class="align-middle">{{ ++$i }}</td>
+                        <td class="align-middle">{{ $row->nama }}</td>
+                        <td class="align-middle">{{ $row->email}}</td>
+                        <td class="align-middle">{{ $row->alamat}}</td>
+                        <td class="align-middle">
+                            @if(!empty($row->tanggal_masuk))
+                            {{ $pegawai->tanggal_masuk }}
+                                @else
+                                -
+                            @endif
+                        </td>
+                        <td class="align-middle">{{ $row->rekening}}</td>
+                        <td class="align-middle">{{ $row->type_pegawai}}</td>
+                        <td class="align-middle">{{ $row->bank_id}}</td>
+                        <td class="align-middle">{{ $row->jabatanName($row->jabatan_id)}}</td>
+                        <td class="align-middle">{{ $row->jabatanBonus($row->jabatan_id)}}</td>
                         {{-- <td>{{ $row->jabatanBonus($row->bonus_loyalitas) }}</td> --}}
-                        <td>
-                            <a class="btn btn-info" href="{{ route('pegawai.show',$row->id) }}">Show</a>
+                        <td class="align-middle">
+                            <a class="btn btn-primary" href="{{ route('pegawai.show',$row->id) }}"><i class="fa fa-info"></i></a>
                             @can('pegawai-edit')
-                                <a class="btn btn-primary" href="{{ route('pegawai.edit',$row->id) }}">Edit</a>
+                                <a class="btn btn-warning" href="{{ route('pegawai.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan
                             @can('pegawai-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['pegawai.destroy', $row->id],'style'=>'display:inline']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                    <button type="submit" class="btn btn-sm-2 btn-danger m-2" title="Hapus">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 {!! Form::close() !!}
                             @endcan
                         </td>

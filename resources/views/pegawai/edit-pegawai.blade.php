@@ -6,14 +6,16 @@
     <h1>Edit Data Pegawai</h1>
 
     @if (count($errors) > 0)
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-        </ul>
-    </div>
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+            </ul>
+        </div>
     @endif
 @stop
 
@@ -36,16 +38,6 @@
                         {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control','id' => 'email')) !!}
                     </div>
                 </div>
-            </div>
-
-            <div class="form-group">
-                <label for="gajiPokok">Gaji Pokok</label>
-                {!! Form::text('gaji_pokok', null, array('placeholder' => 'Gaji Pokok','class' => 'form-control','id' => 'gajiPokok')) !!}
-            </div>
-
-            <div class="form-group">
-                <label for="gajiProfesional">Bonus Profesional</label>
-                {!! Form::text('bonus_profesional', null, array('placeholder' => 'Bonus Profesional','class' => 'form-control','id' => 'gajiProfesional')) !!}
             </div>
             <div class="form-group">
                 <label for="alamat">Alamat</label>
@@ -71,7 +63,7 @@
                 <div class="col-sm">
                     <div class="form-group">                
                         <label for="exampleSelectBorder">Jabatan</label>
-                        <select class="custom-select form-control-border" id="exampleSelectBorder" name="jabatan_id">              
+                        <select class="form-control" id="exampleSelectBorder" name="jabatan_id">              
                             @foreach($jabatan as $value)
                                 <option value={{ $value['id'] }}>{{ $value['name'] }}</option>
                             @endforeach
@@ -82,7 +74,11 @@
                 <div class="col-sm">
                     <div class="form-group">
                         <label for="tipePegawai">Tipe Pegawai</label>
-                        {!! Form::text('type_pegawai', null, array('placeholder' => 'Tipe Pegawai','class' => 'form-control','id' => 'tipePegawai')) !!}
+                        <select class="form-control" id="tipePegawai" name="type_pegawai">
+                            <option disabled style="display:none">Tipe Pegawai</option>
+                            <option value="Tetap">Tetap</option>
+                            <option value="Magang">Magang</option>
+                        </select>
                     </div>
                 </div>
             </div>

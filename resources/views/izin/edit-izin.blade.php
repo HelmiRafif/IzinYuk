@@ -3,18 +3,8 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Edit Data User</h1>
+    <h1>Edit Data Izin</h1>
 
-    @if (count($errors) > 0)
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-        </ul>
-    </div>
-    @endif
 @stop
 
 @section('content')

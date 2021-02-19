@@ -5,12 +5,6 @@
 @section('content_header')
     <h1>Data Potongan Gaji</h1>    
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
 @stop
 
 @section('content')
@@ -40,13 +34,15 @@
                         <td>{{ $row->name }}</td>
                         <td>{{ $row->besar_potongan}}</td>                        
                         <td>
-                            <a class="btn btn-info" href="{{ route('potongan.show',$row->id) }}">Show</a>
+                            <a class="btn btn-primary" href="{{ route('potongan.show',$row->id) }}"><i class="fa fa-info"></i></a>
                             @can('potongan-edit')
-                                <a class="btn btn-primary" href="{{ route('potongan.edit',$row->id) }}">Edit</a>
+                                <a class="btn btn-warning" href="{{ route('potongan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan
                             @can('potongan-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['potongan.destroy', $row->id],'style'=>'display:inline']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                    <button type="submit" class="btn btn-sm-2 btn-danger m-2" title="Hapus">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 {!! Form::close() !!}
                             @endcan
                         </td>

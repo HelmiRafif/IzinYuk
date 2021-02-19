@@ -5,29 +5,6 @@
 @section('content_header')
     <h1>Data Pegawai</h1>
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-            </ul>
-        </div>
-    @endif
-
-    @if ($message = Session::get('error'))
-        <div class="alert alert-error">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
-    @if ($message = Session::get('warning'))
-        <div class="alert alert-warning text-white">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
 @stop
 
 @section('content')
@@ -67,18 +44,31 @@
                 </div>
             </div>
             @can('pegawai-edit')
-            <div class="form-group">
+            <div class="row">
+            {{-- <div class="form-group">
                 <label for="tipePegawai">Tipe Pegawai</label>
                 {!! Form::text('type_pegawai', null, array('placeholder' => 'Tipe Pegawai','class' => 'form-control','id' => 'tipePegawai')) !!}
-            </div>            
-            <div class="form-group">                
-                <label for="exampleSelectBorder">Jabatan</label>
-                <select class="custom-select form-control-border" id="exampleSelectBorder" name="jabatan_id">              
-                    @foreach($jabatan as $value)
-                        <option value={{ $value['id'] }}>{{ $value['name'] }}</option>
-                    @endforeach
-                </select>
-                <input type="hidden" name="session_id" value="{{Auth::id()}} "><br />
+            </div> --}}
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="exampleSelectBorder">Jabatan</label>
+                        <select class="custom-select form-control-border" id="exampleSelectBorder" name="jabatan_id">              
+                            @foreach($jabatan as $value)
+                                <option value={{ $value['id'] }}>{{ $value['name'] }}</option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" name="session_id" value="{{Auth::id()}} "><br />
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="tipePegawai">Tipe Pegawai</label>
+                        <select class="form-control" id="tipePegawai" name="type_pegawai">
+                            <option value="Tetap">Tetap</option>
+                            <option value="Magang">Magang</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             @endcan
 

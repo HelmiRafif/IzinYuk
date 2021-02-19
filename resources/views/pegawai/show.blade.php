@@ -5,12 +5,6 @@
 @section('content_header')
     <h1>Detail Pegawai</h1>    
 
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
 @stop
 
 @section('content')
@@ -51,13 +45,15 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <th>
-                        <a class="btn btn-warning" href="{{ route('pegawai.edit',Auth::user()->id) }}">Edit biodata</a>
-                    </th>
-                    <th>
-                    </th>
-                    <th>
-                    </th>
+                    <td>
+                        <span>
+                            <a class="btn btn-warning" href="{{ route('pegawai.edit',Auth::user()->id) }}"><i class="fa fa-edit"></i></a>
+                        </span>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
                 </tr>
             </tfoot>
         </table>

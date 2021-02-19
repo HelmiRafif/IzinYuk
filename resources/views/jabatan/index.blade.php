@@ -41,13 +41,15 @@
                             <td>{{ $row->gaji_pokok}}</td>
                             <td>{{ $row->bonus_profesional}}</td>
                             <td>
-                                <a class="btn btn-info" href="{{ route('jabatan.show',$row->id) }}">Show</a>
+                                <a class="btn btn-primary" href="{{ route('jabatan.show',$row->id) }}"><i class="fa fa-info"></i></</a>
                                 @can('jabatan-edit')
-                                    <a class="btn btn-primary" href="{{ route('jabatan.edit',$row->id) }}">Edit</a>
+                                    <a class="btn btn-warning" href="{{ route('jabatan.edit',$row->id) }}"><i class="fa fa-edit"></i></</a>
                                 @endcan
                                 @can('jabatan-delete')
                                     {!! Form::open(['method' => 'DELETE','route' => ['jabatan.destroy', $row->id],'style'=>'display:inline']) !!}
-                                        {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                        <button type="submit" class="btn btn-sm-2 btn-danger m-2" title="Hapus">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
                                     {!! Form::close() !!}
                                 @endcan
                             </td>

@@ -4,12 +4,6 @@
 
 @section('content_header')
     <h1>Dashboard</h1>        
-
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success">
-                <p>{{ $message }}</p>
-            </div>
-        @endif
 @stop
 
 @section('content')
@@ -37,11 +31,13 @@
                         <td>{{ $row->besar_tunjangan}}</td>
                         <td>
                             @can('permission-edit')
-                                <a class="btn btn-primary" href="{{ route('tunjangan.edit',$row->id) }}">Edit</a>
+                                <a class="btn btn-primary" href="{{ route('tunjangan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan
                             @can('permission-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['tunjangan.destroy', $row->id],'style'=>'display:inline']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                    <button type="submit" class="btn btn-sm-2 btn-danger m-2" title="Hapus">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 {!! Form::close() !!}
                             @endcan
                         </td>

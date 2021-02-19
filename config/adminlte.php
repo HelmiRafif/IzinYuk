@@ -250,7 +250,7 @@ return [
             ],
             [
                 'text' => 'Perizinan Anda',                
-                'route' => 'izin.create',
+                'route' => 'izin.detail',
                 'can' => 'izin-detail'
             ],
             ],
@@ -393,11 +393,11 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@8',
                 ],
             ],

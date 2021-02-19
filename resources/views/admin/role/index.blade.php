@@ -3,14 +3,7 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>    
-
-    @if ($message = Session::get('success'))
-        <div class="alert alert-success">
-            <p>{{ $message }}</p>
-        </div>
-    @endif
-
+    <h1>Dashboard</h1>
 @stop
 
 @section('content')
@@ -40,13 +33,15 @@
                         <td>{{ $role->id }}</td>                        
                         <td>{{ $role->name }}</td>
                         <td>
-                            <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>
+                            <a class="btn btn-primary m-2" href="{{ route('roles.show',$role->id) }}"><i class="fa fa-info"></i></a>
                             @can('role-edit')
-                                <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+                                <a class="btn btn-warning m-2" href="{{ route('roles.edit',$role->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan
                             @can('role-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
-                                    {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
+                                    <button type="submit" class="btn btn-danger m-2" title="Hapus">
+                                        <i class="fa fa-trash"></i>
+                                    </button>
                                 {!! Form::close() !!}
                             @endcan
                         </td>

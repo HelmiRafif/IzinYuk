@@ -106,7 +106,7 @@ class PegawaiController extends Controller
         // $input = $request->all();
         // pegawai::create($input);
         
-        return redirect()->route('pegawai.biodata')->with('success','Berhasil menambah pegawai');
+        return redirect()->route('pegawai.data')->with('success','Berhasil menambah pegawai');
     }
 
     /**
@@ -147,17 +147,18 @@ class PegawaiController extends Controller
             'nama' => 'required',
             'email' => 'required',
             'alamat' => 'required',
-            'tanggal_masuk' => 'required',
             'rekening' => 'required',
-            'type_pegawai' => 'required',
             'bank_id' => 'required',
-            'jabatan_id' => 'required',
         ]);
-        
-        $pegawai = Jabatan::find($id);
-        $pegawai->name = $request->input('name');
+
+        $pegawai = pegawai::find($id);
+        $pegawai->nama = $request->input('nama');
         $pegawai->email = $request->input('email');
-        $pegawai->bonus_profesional = $request->input('bonus_profesional');
+        $pegawai->alamat = $request->input('alamat');
+        $pegawai->rekening = $request->input('rekening');
+        $pegawai->bank_id = $request->input('bank_id');
+        $pegawai->jabatan_id = $request->input('jabatan_id');
+        $pegawai->type_pegawai = $request->input('type_pegawai');
         $pegawai->save();
     
         return redirect()->route('pegawai.index')
