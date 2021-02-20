@@ -11,8 +11,8 @@
     <div class="row mx-auto px-2">
         <div class="col-12">
             <div class="card ">
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                <div class="card-body table-responsive">
+                    <table class="table table-hover text-nowrap" id="table">
                     <thead class="text-center">
                         <tr>
                         <th>#</th>
@@ -27,23 +27,23 @@
                     <tbody class="text-center">
                         @foreach ($izin as $row)
                             <tr>
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $row->user_id }}</td>
-                            <td>{{ $row->type_izin }}</td>
-                            <td>{{ $row->tanggal_mulai }}</td>
-                            <td>{{ $row->tanggal_selesai }}</td>
-                            <td> 
+                            <td class="align-middle">{{ ++$i }}</td>
+                            <td class="align-middle">{{ $row->user_id }}</td>
+                            <td class="align-middle">{{ $row->type_izin }}</td>
+                            <td class="align-middle">{{ $row->tanggal_mulai }}</td>
+                            <td class="align-middle">{{ $row->tanggal_selesai }}</td>
+                            <td class="align-middle"> 
                                 @if(empty($row->status_diterima))
                                     <label class="badge badge-warning">Menunggu konfirmasi</label>
                                     @else
                                             <label class="badge badge-success">{{ $row->status_diterima }}</label>
                                 @endif
                             </td>
-                            <td class="text-center">
-                                <div class="row">
+                            <td class="text-center" style="text-align: center">
+                                <div class="row text-center align-middle">
                                     <a class="btn btn-sm-2 btn-primary m-2" title="Detail" href="{{ route('izin.show',$row->id) }}"><i class="fa fa-info"></i></a>
                                     @can('izin-edit')
-                                        <a class="btn btn-sm-2 btn-warning m-2" title="Edit" href="{{ route('izin.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-sm-2 btn-warning m-2 text-white" title="Edit" href="{{ route('izin.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                                     @endcan
                                     @can('izin-delete')
                                         {!! Form::open(['method' => 'DELETE','route' => ['izin.destroy', $row->id],'style'=>'display:inline']) !!}
@@ -82,5 +82,9 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        $(function(){
+            $('#table').DataTable();
+        })
+    </script>
 @stop

@@ -20,7 +20,7 @@ class JabatanController extends Controller
 
     public function index(Request $request)
     {
-        $jabatan = Jabatan::orderBy('id','ASC')->paginate(5);
+        $jabatan = Jabatan::orderBy('id','ASC')->paginate();
         return view('jabatan.index', compact('jabatan'))
             ->with('i', ($request->input('page', 1) -1) * 5);
     }

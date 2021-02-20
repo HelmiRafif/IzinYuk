@@ -18,8 +18,8 @@
             <div class="card ">
 
             <!-- /.card-header -->
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+            <div class="card-body table-responsive">
+                <table class="table table-hover text-nowrap" id="table">
                 <thead class="text-center">
                     <tr>
                     <th>No</th>                    
@@ -30,12 +30,12 @@
                 <tbody class="text-center">
                     @foreach ($roles as $key => $role)
                         <tr>
-                        <td>{{ $role->id }}</td>                        
-                        <td>{{ $role->name }}</td>
+                        <td class="align-middle">{{ $role->id }}</td>                        
+                        <td class="align-middle">{{ $role->name }}</td>
                         <td>
                             <a class="btn btn-primary m-2" href="{{ route('roles.show',$role->id) }}"><i class="fa fa-info"></i></a>
                             @can('role-edit')
-                                <a class="btn btn-warning m-2" href="{{ route('roles.edit',$role->id) }}"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-warning m-2 text-white" href="{{ route('roles.edit',$role->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan
                             @can('role-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['roles.destroy', $role->id],'style'=>'display:inline']) !!}
@@ -63,5 +63,9 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        $(function(){
+            $('#table').DataTable();
+        })
+    </script>
 @stop

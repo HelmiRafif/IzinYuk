@@ -19,7 +19,7 @@ class PotonganController extends Controller
 
     public function index(Request $request)
     {
-        $potongan = potongan::orderBy('id','DESC')->paginate(5);
+        $potongan = potongan::orderBy('id','DESC')->paginate();
         return view('potongan.index', compact('potongan'))
             ->with('i', ($request->input('page', 1) -1) * 5);
     }

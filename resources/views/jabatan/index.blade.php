@@ -22,8 +22,8 @@
     <div class="row">
         <div class="col-12">
             <div class="card ">
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                <div class="card-body table-responsive">
+                    <table class="table table-hover text-nowrap" id="table">
                     <thead class="text-center">
                         <tr>
                         <th>No</th>
@@ -36,14 +36,18 @@
                     <tbody class="text-center">
                         @foreach ($jabatan as $row)
                             <tr>
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $row->name }}</td>
-                            <td>{{ $row->gaji_pokok}}</td>
-                            <td>{{ $row->bonus_profesional}}</td>
+                            <td class="align-middle">{{ ++$i }}</td>
+                            <td class="align-middle">{{ $row->name }}</td>
+                            <td class="align-middle">{{ $row->gaji_pokok}}</td>
                             <td>
-                                <a class="btn btn-primary" href="{{ route('jabatan.show',$row->id) }}"><i class="fa fa-info"></i></</a>
+                                @if(empty($row->bonus_profesional))
+                                    Tidak ada
+                                @endif
+                            {{ $row->bonus_profesional}}</td>
+                            <td>
+                                <a class="btn btn-primary" href="{{ route('jabatan.show',$row->id) }}"><i class="fa fa-info"></i></a>
                                 @can('jabatan-edit')
-                                    <a class="btn btn-warning" href="{{ route('jabatan.edit',$row->id) }}"><i class="fa fa-edit"></i></</a>
+                                    <a class="btn btn-warning text-white" href="{{ route('jabatan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                                 @endcan
                                 @can('jabatan-delete')
                                     {!! Form::open(['method' => 'DELETE','route' => ['jabatan.destroy', $row->id],'style'=>'display:inline']) !!}
@@ -70,5 +74,9 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        $(function(){
+            $('#table').DataTable();
+        })
+    </script>
 @stop

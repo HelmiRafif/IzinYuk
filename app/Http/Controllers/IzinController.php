@@ -23,7 +23,7 @@ class IzinController extends Controller
 
     public function index(Request $request)
     {
-        $izin = Izin::orderBy('id','DESC')->paginate(30);
+        $izin = Izin::orderBy('id','DESC')->paginate();
         return view('izin.index',compact('izin'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }

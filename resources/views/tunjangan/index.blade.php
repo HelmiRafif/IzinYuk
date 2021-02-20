@@ -13,8 +13,8 @@
     <div class="row">
         <div class="col-12">
             <div class="card">                            
-                <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                <div class="card-body table-responsive">
+                    <table class="table table-hover text-nowrap" id="table">
                     <thead class="text-center">
                         <tr>
                         <th>ID</th>
@@ -26,12 +26,12 @@
                     <tbody class="text-center">
                     @foreach($tunjangans as $row)
                         <tr>
-                        <td>{{ $row->id }}</td>
-                        <td>{{ $row->name }}</td>
-                        <td>{{ $row->besar_tunjangan}}</td>
+                        <td class="align-middle">{{ $row->id }}</td>
+                        <td class="align-middle">{{ $row->name }}</td>
+                        <td class="align-middle">{{ $row->besar_tunjangan}}</td>
                         <td>
                             @can('permission-edit')
-                                <a class="btn btn-primary" href="{{ route('tunjangan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-primary text-white" href="{{ route('tunjangan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan
                             @can('permission-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['tunjangan.destroy', $row->id],'style'=>'display:inline']) !!}
@@ -58,5 +58,9 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        $(function(){
+            $('#table').DataTable();
+        })
+    </script>
 @stop

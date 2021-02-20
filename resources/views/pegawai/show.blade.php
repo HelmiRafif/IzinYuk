@@ -47,7 +47,7 @@
                 <tr>
                     <td>
                         <span>
-                            <a class="btn btn-warning" href="{{ route('pegawai.edit',Auth::user()->id) }}"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-warning text-white" href="{{ route('pegawai.edit',Auth::user()->id) }}"><i class="fa fa-edit"></i></a>
                         </span>
                     </td>
                     <td>

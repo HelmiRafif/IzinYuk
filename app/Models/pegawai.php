@@ -12,6 +12,7 @@ class pegawai extends Model
 
     protected $guarded = [ ];
     protected $fillable = [
+        'id',
         'nama',
         'email',
         'alamat',

@@ -17,8 +17,8 @@
         <div class="col-12">
             <div class="card ">
             <!-- /.card-header -->
-            <div class="card-body table-responsive p-0">
-                <table class="table table-hover text-nowrap">
+            <div class="card-body table-responsive">
+                <table class="table table-hover text-nowrap" id="table">
                 <thead class="text-center">
                     <tr>
                     <th>No</th>
@@ -30,13 +30,13 @@
                 <tbody class="text-center">
                     @foreach ($potongan as $row)
                         <tr>
-                        <td>{{ ++$i }}</td>
-                        <td>{{ $row->name }}</td>
-                        <td>{{ $row->besar_potongan}}</td>                        
+                        <td class="align-middle">{{ ++$i }}</td>
+                        <td class="align-middle">{{ $row->name }}</td>
+                        <td class="align-middle">{{ $row->besar_potongan}}</td>                        
                         <td>
                             <a class="btn btn-primary" href="{{ route('potongan.show',$row->id) }}"><i class="fa fa-info"></i></a>
                             @can('potongan-edit')
-                                <a class="btn btn-warning" href="{{ route('potongan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
+                                <a class="btn btn-warning text-white" href="{{ route('potongan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan
                             @can('potongan-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['potongan.destroy', $row->id],'style'=>'display:inline']) !!}
@@ -63,5 +63,9 @@
 @stop
 
 @section('js')
-    <script> console.log('Hi!'); </script>
+    <script>
+        $(function(){
+            $('#table').DataTable();
+        })
+    </script>
 @stop

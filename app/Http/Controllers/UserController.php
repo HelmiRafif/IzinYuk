@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use App\Models\pegawai;
 use Spatie\Permission\Contracts\Role as RoleContract;
 use Illuminate\Support\Arr;
 use Hash;
@@ -23,7 +24,7 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
-        $data = User::orderBy('id','ASC')->paginate(25);
+        $data = User::orderBy('id','ASC')->paginate();
         return view('admin.user.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -49,8 +50,17 @@ class UserController extends Controller
             'roles' => 'required',
         ]);
 
-        $input = $request->all();        
+        $input = $request->all();
         $input['password'] = Hash::make($input['password']);
+
+        $user = User::create($input);
+        $user->assignRole($request->input('roles'));
+
+        $input = new pegawai([
+            'nama' => $request->get('name'),
+            'email' => $request->get('email'),
+            'id' => $user->id
+            ]);
         // $input['roles'] = 
             // foreach ($input as $p) {
             //     echo $p->id;
@@ -68,9 +78,7 @@ class UserController extends Controller
         // }
         // $userId = Role::find($input['roles']);
         // $userId->roles()->attach($userId);
-        
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        $input->save();
 
         
         // $user->syncRole($request->input('role_id'));
@@ -122,7 +130,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         User::find($id)->delete();
-        return redirect()->route('users.index')->with('status','Berhasil menghapus user');
+        return redirect()->route('users.index')->with('success','Berhasil menghapus user');
     }
 
     // public function useradd()

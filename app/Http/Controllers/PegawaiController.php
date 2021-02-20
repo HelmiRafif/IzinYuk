@@ -17,13 +17,13 @@ class PegawaiController extends Controller
         $this->middleware('permission:pegawai-list|pegawai-create|pegawai-edit|pegawai-delete', ['only' => ['index','store']]);
         $this->middleware('permission:pegawai-create', ['only' => ['create','store']]);
         $this->middleware('permission:pegawai-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:pegawai-biodata', ['only' => ['biodata']]);
+        $this->middleware('permission:pegawai-biodata', ['only' => ['biodata','list']]);
         $this->middleware('permission:pegawai-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
-        $pegawai = Pegawai::orderBy('id','DESC')->paginate(25);
+        $pegawai = Pegawai::orderBy('id','ASC')->paginate();
         return view('pegawai.index',compact('pegawai'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
@@ -34,8 +34,8 @@ class PegawaiController extends Controller
         $pegawai = pegawai::find($id);
         $show = DB::table('pegawais')->where('id',$id)->count();
 
-        if ($show == 0) {
-            return redirect()->route('pegawai.create')->with('warning','Anda belum memiliki biodata pegawai, Isi biodata anda');
+        if ($show == 0 | empty($pegawai->alamat)) {
+            return redirect()->route('pegawai.biodata')->with('warning','Anda belum melengkapi biodata pegawai, Isi biodata anda');
         }
         else {
             return view('pegawai.show', compact('pegawai','show','id'));
@@ -129,8 +129,9 @@ class PegawaiController extends Controller
      */
     public function edit($id)
     {
+        $jabatan = jabatan::get()->toArray();
+        $id = Auth::user()->id;
         $pegawai = pegawai::find($id);
-        $jabatan = jabatan::get();
         return view('pegawai.edit-pegawai',compact('pegawai','jabatan'));
     }
 

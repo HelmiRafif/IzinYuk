@@ -24,7 +24,7 @@ class TunjanganController extends Controller
      */
     public function index(Request $request)
     {
-        $tunjangans = tunjangan::orderBy('id','DESC')->paginate(5);
+        $tunjangans = tunjangan::orderBy('id','DESC')->paginate();
         return view('tunjangan.index',compact('tunjangans'))
             ->with('i', ($request->input('page', 1) - 1) * 5);  
     }

@@ -22,11 +22,9 @@
                 <label for="exampleSelectRounded0">Tipe Izin</label>
                 <select class="custom-select rounded-0" id="exampleSelectRounded0" name="type_izin">
                 <option selected disabled style="display:none">Tipe Perizinan</option>
+                <option Value="Izin">Izin</option>
                 <option Value="sakit">Sakit</option>
-                <option Value="sakit">Hal Penting</option>
-                <option Value="cuti hamil">Cuti Hamil</option>    
-                <option Value="cuti tahunan">Cuti Tahunan</option>
-                <option Value="cuti besar">Cuti Besar</option>
+                <option Value="Terlambat">Terlambat</option>    
                 </select>
             </div>
 
