@@ -20,7 +20,7 @@ class CreateIzinsTable extends Migration
             $table->date('tanggal_selesai');
             $table->string('keterangan');
             $table->string('type_izin');
-            $table->string('status_diterima')->nullable();
+            $table->string('status_diterima')->default('Menunggu konfirmasi');
             $table->timestamps();
 
             $table->foreign('user_id')

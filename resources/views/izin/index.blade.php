@@ -33,10 +33,12 @@
                             <td class="align-middle">{{ $row->tanggal_mulai }}</td>
                             <td class="align-middle">{{ $row->tanggal_selesai }}</td>
                             <td class="align-middle"> 
-                                @if(empty($row->status_diterima))
-                                    <label class="badge badge-warning">Menunggu konfirmasi</label>
+                                @if($row->status_diterima == 'Menunggu konfirmasi')
+                                    <label class="badge badge-warning p-2">Menunggu konfirmasi</label>
+                                    @elseif($row->status_diterima == 'Ditolak')
+                                    <label class="badge badge-danger p-2">{{ $row->status_diterima }}</label>
                                     @else
-                                            <label class="badge badge-success">{{ $row->status_diterima }}</label>
+                                            <label class="badge badge-success p-2">{{ $row->status_diterima }}</label>
                                 @endif
                             </td>
                             <td class="text-center" style="text-align: center">
@@ -47,19 +49,24 @@
                                     @endcan
                                     @can('izin-delete')
                                         {!! Form::open(['method' => 'DELETE','route' => ['izin.destroy', $row->id],'style'=>'display:inline']) !!}
-                                            <button type="submit" class="btn btn-sm-2 btn-danger m-2" title="Hapus">
+                                            <button type="submit" class="btn btn-sm-2 btn-secondary m-2" title="Hapus">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         {!! Form::close() !!}
                                     @endcan
                                     @can('izin-admit')
-                                        @if(!empty($row->status_diterima))
-                                            @else
-                                                {!! Form::open(['method' => 'PATCH' ,'route' => ['izin.admit',$row->id]]) !!}
-                                                    <button class="btn btn-sm-2 btn-success m-2" title="Approve" type="submit" name="status_diterima" value="Diterima">
+                                        @if($row->status_diterima == 'Menunggu konfirmasi')
+                                            {!! Form::open(['method' => 'PATCH' ,'route' => ['izin.admit',$row->id]]) !!}
+                                                <div class="button-group">
+                                                    <button class="btn btn-sm-2 btn-success m-2" title="Terima" type="submit" name="status_diterima" value="Diterima">
                                                         <i class="fa fa-check"></i>
                                                     </button>
+                                                    <button class="btn btn-sm-2 btn-danger m-2" title="Tolak" type="submit" name="status_diterima" value="Ditolak">
+                                                        <i class="fa fa-times"></i>
+                                                    </button>
+                                                </div>
                                                 {!! Form::close() !!}
+                                            @else
                                         @endif
                                     @endcan
                                 </div>

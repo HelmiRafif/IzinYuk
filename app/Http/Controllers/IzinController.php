@@ -8,6 +8,7 @@ use App\Models\izin;
 use App\Models\pegawai;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
 
 class IzinController extends Controller
 {
@@ -43,8 +44,28 @@ class IzinController extends Controller
 
     public function create(Request $request)
     {
+        $id = Auth::user()->id;
+        $date = izin::select()->where('user_id',$id)->where('status_diterima','!=','Ditolak')->get();
+        // $rejected = izin::where('status_diterima','Ditolak')->count();
+        $quota = 6;
+
+        if ($date->count() == $quota) {
+            return redirect()->route('izin.detail')->with('warning','Anda telah menggunakan seluruh jatah cuti');
+        }
+        
+        
+        foreach ($date as $i) {
+            $subdays = strtotime($i->tanggal_selesai)>=strtotime('today');
+            if ($i->status_diterima == 'Menunggu konfirmasi') {
+                return redirect()->route('izin.detail')->with('warning','Anda memiliki izin yang menunggu dikonfirmasi');
+            }
+            elseif ($subdays == true) {
+                return redirect()->route('izin.detail')->with('warning', 'Anda masih menjalani perizinan');
+            }
+        }
         $izin = izin::get();
         return view('izin.add-izin', compact('izin'));
+        // $limit = izin::where($date, Carbon::now()->subDays(30))->get();
     }
 
     /**
@@ -141,9 +162,15 @@ class IzinController extends Controller
         $izin = izin::find($id);
         $izin->status_diterima = $request->input('status_diterima');
         $izin->save();
-
-        return redirect()->route('izin.index')
-                        ->with('success','Berhasil approve izin');
+        if ($request->input('status_diterima') == 'Diterima') {
+            return redirect()->route('izin.index')
+                            ->with('success','Berhasil approve izin');
+        }
+        elseif ($request->input('status_diterima') == 'Ditolak') {
+            return redirect()->route('izin.index')
+                            ->with('success','Izin ditolak');
+        }
+            
     }
 
     /**

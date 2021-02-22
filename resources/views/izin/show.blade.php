@@ -59,7 +59,7 @@
                             <td>{{ $row->tanggal_mulai }}</td>
                             <td>{{ $row->tanggal_selesai }}</td>
                             <td> 
-                                @if(empty($row->status_diterima))
+                                @if($row->status_diterima == 'Menunggu konfirmasi')
                                     <label class="badge badge-warning">Menunggu konfirmasi</label>
                                     @else
                                             <label class="badge badge-success">{{ $row->status_diterima }}</label>
