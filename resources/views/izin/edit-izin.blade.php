@@ -28,14 +28,14 @@
                 <div class="col">
                     <div class="form-group">
                     <label>Tanggal Mulai : </label>
-                    {!! Form::date('tanggal_mulai', \Carbon\Carbon::now()); !!}
+                    {!! Form::date('tanggal_mulai', null); !!}
                     </div>
                 </div>
 
                 <div class="col">
                     <div class="form-group">
                     <label>Tanggal Selesai : </label>
-                    {!! Form::date('tanggal_selesai', \Carbon\Carbon::now()); !!}
+                    {!! Form::date('tanggal_selesai', null); !!}
                     </div>
                 </div>
             </div>

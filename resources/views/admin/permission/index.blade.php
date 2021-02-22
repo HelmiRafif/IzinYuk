@@ -36,7 +36,7 @@
                             @endcan
                             @can('permission-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['permissions.destroy', $row->id],'style'=>'display:inline']) !!}
-                                    <button type="submit" class="btn btn-danger m-2" title="Hapus">
+                                    <button type="submit" class="btn btn-secondary m-2" title="Hapus">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 {!! Form::close() !!}

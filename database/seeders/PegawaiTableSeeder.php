@@ -17,18 +17,18 @@ class PegawaiTableSeeder extends Seeder
      */
     public function run()
     {
-        $pegawai = Pegawai::create([
-            'name' => 'Erik Samsul',
-            'email' => 'eriksam@gmail.com',
-        ]);
+        // $pegawai = Pegawai::create([
+        //     'name' => 'Erik Samsul',
+        //     'email' => 'eriksam@gmail.com',
+        // ]);
 
-        $jabatans = jabatan::create(['name' => 'Operator']);
+        // $jabatans = jabatan::create(['name' => 'Operator']);
 
-        $jabatan = jabatan::second();
+        // $jabatan = jabatan::second();
 
-        $pegawai->attach($jabatan,['jabatan_id' => $jabatan]);
+        // $pegawai->attach($jabatan,['jabatan_id' => $jabatan]);
 
-        $jabatans->save();
+        // $jabatans->save();
 
     }
 }

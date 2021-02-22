@@ -46,8 +46,8 @@
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">
-                        <label for="bank">Bank ID</label>
-                        {!! Form::text('bank_id', null, array('placeholder' => 'Bank ID','class' => 'form-control','id' => 'bank')) !!}
+                        <label for="bank">Bank</label>
+                        {!! Form::text('bank', null, array('placeholder' => 'Bank ID','class' => 'form-control','id' => 'bank')) !!}
                     </div>
                 </div>
                 <div class="col-sm">

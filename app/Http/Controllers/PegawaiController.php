@@ -83,7 +83,7 @@ class PegawaiController extends Controller
             'alamat' => $request->get('alamat'),
             'rekening' => $request->get('rekening'),
             'type_pegawai' => $request->get('type_pegawai'),
-            'bank_id' => $request->get('bank_id'),
+            'bank' => $request->get('bank'),
             'jabatan_id' => $request->get('jabatan_id'),
             // 'session_id' => $session_id->get()
             ]);

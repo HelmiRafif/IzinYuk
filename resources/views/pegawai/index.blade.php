@@ -28,7 +28,7 @@
                     <th>Tanggal Masuk</th>
                     <th>Rekening</th>
                     <th>Tipe Pegawai</th>
-                    <th>Bank ID</th>
+                    <th>Bank</th>
                     <th>Jabatan</th>
                     <th>Bonus Loyalitas</th>
                     <th>Action</th>
@@ -61,7 +61,7 @@
                             @endcan
                             @can('pegawai-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['pegawai.destroy', $row->id],'style'=>'display:inline']) !!}
-                                    <button type="submit" class="btn btn-sm-2 btn-danger m-2" title="Hapus">
+                                    <button type="submit" class="btn btn-sm-2 btn-secondary m-2" title="Hapus">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 {!! Form::close() !!}

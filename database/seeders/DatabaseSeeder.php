@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             PotonganTableSeeder::class,
             TunjanganTableSeeder::class,
             PermissionTableSeeder::class,
-            CreateAdminUserSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

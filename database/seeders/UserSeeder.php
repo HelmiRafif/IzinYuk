@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\pegawai;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class CreateAdminUserSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,7 +23,7 @@ class CreateAdminUserSeeder extends Seeder
             'password' => bcrypt('123456')
         ]);
     
-        $role = Role::create(['name' => 'Admin']);
+        $role = Role::create(['name' => 'Administrator']);
 
         $permissions = Permission::pluck('id','id')->all();
 
@@ -30,7 +31,13 @@ class CreateAdminUserSeeder extends Seeder
 
         $user->assignRole([$role->id]);
 
-        $hasrole = Role::pluck('id','id')->all();
+        $pegawai = pegawai::create([
+            'id' => $user->id,
+            'nama' => $user->name,
+            'email' => $user->email
+        ]);
+
+        // $hasrole = Role::pluck('id','id')->all();
         
     }
 }

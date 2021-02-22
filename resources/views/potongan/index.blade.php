@@ -40,7 +40,7 @@
                             @endcan
                             @can('potongan-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['potongan.destroy', $row->id],'style'=>'display:inline']) !!}
-                                    <button type="submit" class="btn btn-sm-2 btn-danger m-2" title="Hapus">
+                                    <button type="submit" class="btn btn-sm-2 btn-secondary m-2" title="Hapus">
                                         <i class="fa fa-trash"></i>
                                     </button>
                                 {!! Form::close() !!}
