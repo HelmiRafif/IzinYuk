@@ -44,10 +44,13 @@ class PermissionTableSeeder extends Seeder
             'pegawai-create',
             'pegawai-edit',
             'pegawai-delete',
+            'pegawai-biodata',
             'izin-list',
             'izin-create',
             'izin-edit',
             'izin-delete',
+            'izin-admit',
+            'izin-detail'
         ];
 
         foreach ($permissions as $permission) {

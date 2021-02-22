@@ -49,7 +49,7 @@ class IzinController extends Controller
         // $rejected = izin::where('status_diterima','Ditolak')->count();
         $quota = 6;
 
-        if ($date->count() == $quota) {
+        if ($date->count() >= $quota) {
             return redirect()->route('izin.detail')->with('warning','Anda telah menggunakan seluruh jatah cuti');
         }
         
@@ -79,7 +79,7 @@ class IzinController extends Controller
         $this->validate($request, [            
             'type_izin' => 'required',
             'tanggal_mulai' => 'required',
-            'tanggal_selesai' => 'required',
+            'tanggal_selesai' => 'required|after_or_equal:tanggal_mulai',
             'keterangan' => 'required'
         ]);
 
@@ -90,6 +90,7 @@ class IzinController extends Controller
         'keterangan'=> $request->get('keterangan'),
         ]);
         $data['user_id'] = Auth::user()->id;
+        $data['status_diterima'] = 'Menunggu konfirmasi';
         $data->save();
 
         // $this->validate($request, [

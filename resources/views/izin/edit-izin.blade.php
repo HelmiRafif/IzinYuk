@@ -46,7 +46,7 @@
 
             <div class="form-group">
                 <label for="status">Batalkan status diterima :</label>
-                <input type="checkbox" id="status" name="status_diterima" value="">
+                <input type="checkbox" id="status" name="status_diterima" value="Ditolak">
             </div>
         </div>
         <!-- /.card-body -->
