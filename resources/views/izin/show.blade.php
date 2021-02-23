@@ -46,46 +46,33 @@
                         <th>Tipe Izin</th>
                         <th>Tanggal Mulai</th>
                         <th>Tanggal Selesai</th>
-                        <th style="width: 40%">Status</th>
-                        {{-- <th>Action</th> --}}
+                        <th>Status</th>
+                        <th>Action</th>
                         </tr>
                     </thead>
                     <tbody class="text-center">
                         @foreach ($izin as $i=>$row)
                             <tr>
-                            <td>{{ ++$i }}</td>
-                            <td>{{ $row->user_id }}</td>
-                            <td>{{ $row->type_izin }}</td>
-                            <td>{{ $row->tanggal_mulai }}</td>
-                            <td>{{ $row->tanggal_selesai }}</td>
-                            <td> 
+                            <td class="align-middle">{{ ++$i }}</td>
+                            <td class="align-middle">{{ $row->user_id }}</td>
+                            <td class="align-middle">{{ $row->type_izin }}</td>
+                            <td class="align-middle">{{ $row->tanggal_mulai }}</td>
+                            <td class="align-middle">{{ $row->tanggal_selesai }}</td>
+                            <td class="align-middle"> 
                                 @if($row->status_diterima == 'Menunggu konfirmasi')
                                     <label class="badge badge-warning">Menunggu konfirmasi</label>
                                     @else
                                             <label class="badge badge-success">{{ $row->status_diterima }}</label>
                                 @endif
                             </td>
-                            {{-- <td>
-                                <a class="btn btn-sm btn-secondary" href="{{ route('izin.show',$row->id) }}">Show</a>
-                                @can('izin-edit')
-                                    <a class="btn btn-sm btn-primary" href="{{ route('izin.edit',$row->id) }}">Edit</a>
-                                @endcan
-                                @can('izin-delete')
-                                    {!! Form::open(['method' => 'DELETE','route' => ['izin.destroy', $row->id],'style'=>'display:inline']) !!}
-                                        {!! Form::submit('Delete', ['class' => 'btn btn-sm btn-danger']) !!}
-                                    {!! Form::close() !!}
-                                @endcan
-                                @can('izin-admit')
-                                    @if(!empty($row->status_diterima))
-                                        @else
-                                            {!! Form::open(['method' => 'PATCH' ,'route' => ['izin.admit',$row->id]]) !!}
-                                                <button class="btn btn-sm btn-success" type="submit" name="status_diterima" value="Diterima">
-                                                Setujui
-                                                </button>
-                                            {!! Form::close() !!}
-                                    @endif
-                                @endcan
-                            </td> --}}
+                            <td class="text-center" style="text-align: center">
+                                    <div class="row text-center align-middle">
+                                        <a class="btn btn-sm-2 btn-primary m-2" title="Detail" href="{{ route('izin.show',$row->id) }}"><i class="fa fa-info"></i></a>
+                                        @can('izin-edit')
+                                            <a class="btn btn-sm-2 btn-warning m-2 text-white" title="Edit" href="{{ route('izin.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
+                                        @endcan
+                                    </div>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
