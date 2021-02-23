@@ -14,13 +14,14 @@
         <div class="card-body">
             <div class="form-group pb-3">
                 <label for="exampleSelectRounded0">Tipe Izin</label>
-                <select class="custom-select rounded-0" id="exampleSelectRounded0" name="type_izin">
-                    <option selected disabled style="display:none">Tipe Perizinan</option>
-                    <option Value="sakit">Sakit</option>
-                    <option Value="sakit">Hal Penting</option>
-                    <option Value="cuti hamil">Cuti Hamil</option>    
-                    <option Value="cuti tahunan">Cuti Tahunan</option>
-                    <option Value="cuti besar">Cuti Besar</option>
+                <select class="custom-select rounded-0" id="exampleSelectRounded0" value={{$izin['type_izin']}} name="type_izin">
+                        {{-- @if (!empty($izin['type_perizinan']))
+                            <option value={{ $value['type_izin'] }}>{{ $value['name'] }}</option>
+                        @endif --}}
+                    {{-- <option selected disabled style="display:none">Tipe Perizinan</option> --}}
+                    <option Value="Izin">Izin</option>
+                    <option Value="Sakit">Sakit</option>
+                    <option Value="Terlambat">Terlambat</option>
                 </select>
             </div>
 
@@ -46,7 +47,7 @@
 
             <div class="form-group">
                 <label for="status">Batalkan status diterima :</label>
-                <input type="checkbox" id="status" name="status_diterima" value="Ditolak">
+                <input type="checkbox" id="status" name="status_diterima" value="Menunggu konfirmasi">
             </div>
         </div>
         <!-- /.card-body -->

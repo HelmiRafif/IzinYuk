@@ -29,12 +29,12 @@
 
             <div class="form-group">
                 <label for="gajiPokok">Gaji Pokok</label>
-                {!! Form::text('gaji_pokok', null, array('placeholder' => 'Gaji Pokok','class' => 'form-control','id' => 'gajiPokok')) !!}
+                {!! Form::text('gaji_pokok', null, array('placeholder' => 'Gaji Pokok','class' => 'form-control price','id' => 'gajiPokok')) !!}
             </div>
 
             <div class="form-group">
                 <label for="gajiProfesional">Bonus Profesional</label>
-                {!! Form::text('bonus_profesional', null, array('placeholder' => 'Bonus Profesional','class' => 'form-control','id' => 'gajiProfesional')) !!}
+                {!! Form::text('bonus_profesional', null, array('placeholder' => 'Bonus Profesional','class' => 'form-control price','id' => 'gajiProfesional')) !!}
             </div>
         </div>
         <!-- /.card-body -->

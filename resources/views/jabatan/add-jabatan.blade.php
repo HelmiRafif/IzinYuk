@@ -14,21 +14,24 @@
                 <label for="namaJabatan">Nama Jabatan</label>            
                 {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control','id' => 'namaJabatan')) !!}
             </div>
-            <div class="form-group">
-                <label for="gajiPokok">Gaji Pokok</label>
-                {!! Form::text('gaji_pokok', null, array('placeholder' => 'Gaji Pokok','class' => 'form-control','id' => 'gajiPokok')) !!}
-            </div>
-            <div class="form-group">
-                <label for="gajiBonus">Bonus Profesional</label>
-                {!! Form::text('bonus_profesional', null, array('placeholder' => 'Bonus Profesional','class' => 'form-control','id' => 'gajiBonus')) !!}
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="">Gaji Pokok</label>
+                        {!! Form::text('gaji_pokok', null, array('placeholder' => 'Gaji Pokok','class' => 'form-control text-right price','style' => 'width: 300px')) !!}
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <div class="form-group">
+                        <label for="">Bonus Profesional (opsional)</label>
+                        {!! Form::text('bonus_profesional', null, array('placeholder' => 'Bonus Profesional','class' => 'form-control text-right price','style' => 'width: 300px')) !!}
+                    </div>
+                </div>
             </div>
 
         </div>
         <!-- /.card-body -->
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+            <button type="submit" class="btn btn-primary m-3">Submit</button>
     {!! Form::close() !!}
 @stop
                 

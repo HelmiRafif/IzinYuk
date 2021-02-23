@@ -32,9 +32,9 @@
                         <tr>
                         <td class="align-middle">{{ ++$i }}</td>
                         <td class="align-middle">{{ $row->name }}</td>
-                        <td class="align-middle">{{ $row->besar_potongan}}</td>                        
+                        <td class="align-middle text-right">{{ number_format($row->besar_potongan,0,",",".") }}</td>
                         <td>
-                            <a class="btn btn-primary" href="{{ route('potongan.show',$row->id) }}"><i class="fa fa-info"></i></a>
+                            <a class="btn btn-primary m-2" href="{{ route('potongan.show',$row->id) }}"><i class="fa fa-info"></i></a>
                             @can('potongan-edit')
                                 <a class="btn btn-warning text-white" href="{{ route('potongan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan

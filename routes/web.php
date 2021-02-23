@@ -24,8 +24,6 @@ use App\Http\Controllers\IzinController;
 |
 */
 
-Auth::routes();
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -50,9 +48,6 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::get('/dashboard', function(){
         return view('admin.dashboard');
-
-
-
     });
 });
 

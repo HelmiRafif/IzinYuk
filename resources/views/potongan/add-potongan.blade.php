@@ -12,11 +12,11 @@
 
             <div class="form-group">
                 <label for="namaPotongan">Nama Potongan</label>            
-                {!! Form::text('name', null, array('placeholder' => 'Nama Potongan','class' => 'form-control','id' => 'namaPotongan')) !!}
+                {!! Form::text('name', null, array('placeholder' => 'ex : Terlambat','class' => 'form-control price','id' => 'namaPotongan', 'style' => 'width: 500px')) !!}
             </div>
             <div class="form-group">
-                <label for="besarPotongan">Gaji Pokok</label>
-                {!! Form::text('besar_potongan', null, array('placeholder' => 'Besar Potongan','class' => 'form-control','id' => 'besarPotongan')) !!}
+                <label for="">Besar Potongan</label>
+                {!! Form::text('besar_potongan', null, array('class' => 'form-control text-right price','style' => 'width: 300px')) !!}
             </div>
 
         </div>

@@ -16,8 +16,8 @@ class PegawaiController extends Controller
     {
         $this->middleware('permission:pegawai-list|pegawai-create|pegawai-edit|pegawai-delete', ['only' => ['index','store']]);
         $this->middleware('permission:pegawai-create', ['only' => ['create','store']]);
-        $this->middleware('permission:pegawai-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:pegawai-biodata', ['only' => ['biodata','list']]);
+        $this->middleware('permission:pegawai-edit', ['only' => ['edit']]);
+        $this->middleware('permission:pegawai-biodata|pegawai-edit', ['only' => ['biodata','list','update']]);
         $this->middleware('permission:pegawai-delete', ['only' => ['destroy']]);
     }
 
@@ -46,7 +46,8 @@ class PegawaiController extends Controller
     {
         $id = Auth::user()->id;
         $pegawai = pegawai::find($id);
-        return view('pegawai.edit-pegawai',compact('pegawai'));
+        $jabatan = jabatan::find($id);
+        return view('pegawai.edit-pegawai',compact('pegawai','jabatan'));
     }
     
     /**
@@ -129,7 +130,7 @@ class PegawaiController extends Controller
      */
     public function edit($id)
     {
-        $jabatan = jabatan::get()->toArray();
+        $jabatan = jabatan::get();
         $id = Auth::user()->id;
         $pegawai = pegawai::find($id);
         return view('pegawai.edit-pegawai',compact('pegawai','jabatan'));
@@ -149,7 +150,7 @@ class PegawaiController extends Controller
             'email' => 'required',
             'alamat' => 'required',
             'rekening' => 'required',
-            'bank_id' => 'required',
+            'bank' => 'required',
         ]);
 
         $pegawai = pegawai::find($id);
@@ -157,12 +158,12 @@ class PegawaiController extends Controller
         $pegawai->email = $request->input('email');
         $pegawai->alamat = $request->input('alamat');
         $pegawai->rekening = $request->input('rekening');
-        $pegawai->bank_id = $request->input('bank_id');
+        $pegawai->bank = $request->input('bank');
         $pegawai->jabatan_id = $request->input('jabatan_id');
         $pegawai->type_pegawai = $request->input('type_pegawai');
         $pegawai->save();
     
-        return redirect()->route('pegawai.index')
+        return redirect()->route('pegawai.data')
                         ->with('success','Berhasil update pegawai');
     }
 

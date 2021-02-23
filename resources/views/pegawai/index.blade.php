@@ -42,7 +42,7 @@
                         <td class="align-middle">{{ $row->email}}</td>
                         <td class="align-middle">{{ $row->alamat}}</td>
                         <td class="align-middle">
-                            @if(!empty($row->tanggal_masuk))
+                            @if (!empty($row->tanggal_masuk))
                             {{ $pegawai->tanggal_masuk }}
                                 @else
                                 -
@@ -50,12 +50,24 @@
                         </td>
                         <td class="align-middle">{{ $row->rekening}}</td>
                         <td class="align-middle">{{ $row->type_pegawai}}</td>
-                        <td class="align-middle">{{ $row->bank_id}}</td>
-                        <td class="align-middle">{{ $row->jabatanName($row->jabatan_id)}}</td>
-                        <td class="align-middle">{{ $row->jabatanBonus($row->jabatan_id)}}</td>
+                        <td class="align-middle">{{ $row->bank}}</td>
+                        <td class="align-middle">
+                            @if (!empty($row->jabatanName($row->jabatan_id)))
+                                {{ $row->jabatanName($row->jabatan_id) }}
+                                @else
+                                -
+                            @endif
+                        </td>
+                        <td class="align-middle">
+                            @if($row->jabatanBonus($row->jabatan_id) == 0) 
+                                -
+                                @elseif(!empty($row->jabatanBonus($row->jabatan_id)))
+                                {{ $row->jabatanBonus($row->jabatan_id)}}
+                            @endif
+                        </td>
                         {{-- <td>{{ $row->jabatanBonus($row->bonus_loyalitas) }}</td> --}}
                         <td class="align-middle">
-                            <a class="btn btn-primary" href="{{ route('pegawai.show',$row->id) }}"><i class="fa fa-info"></i></a>
+                            <a class="btn btn-primary m-2" href="{{ route('pegawai.show',$row->id) }}"><i class="fa fa-info"></i></a>
                             @can('pegawai-edit')
                                 <a class="btn btn-warning text-white" href="{{ route('pegawai.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan

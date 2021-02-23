@@ -47,7 +47,14 @@
                 <div class="col-sm">
                     <div class="form-group">
                         <label for="bank">Bank</label>
-                        {!! Form::text('bank', null, array('placeholder' => 'Bank ID','class' => 'form-control','id' => 'bank')) !!}
+                        <select class="form-control" id="bank" name="bank">
+                            <option disabled style="display:none">Bank</option>
+                            <option value="BCA">BCA</option>
+                            <option value="Mandiri">Mandiri</option>
+                            <option value="BNI">BNI</option>
+                            <option value="BRI">BRI</option>
+                            <option value="CIMB Niaga">CIMB Niaga</option>
+                        </select>
                     </div>
                 </div>
                 <div class="col-sm">
@@ -63,10 +70,11 @@
                 <div class="col-sm">
                     <div class="form-group">                
                         <label for="exampleSelectBorder">Jabatan</label>
-                        <select class="form-control" id="exampleSelectBorder" name="jabatan_id">              
-                            @foreach($jabatan as $value)
-                                <option value={{ $value['id'] }}>{{ $value['name'] }}</option>
-                            @endforeach
+                        <select class="form-control" id="exampleSelectBorder" name="jabatan_id">
+                            <option selected disabled style="display:none">Jabatan</option>
+                                @foreach($jabatan as $value)
+                                    <option value={{ $value['id'] }}>{{ $value['name'] }}</option>
+                                @endforeach
                         </select>
                         <input type="hidden" name="session_id" value="{{Auth::id()}} "><br />
                     </div>
@@ -88,9 +96,7 @@
         @endcan
         <!-- /.card-body -->
 
-        <div class="card-footer mb-3">
-            <button type="submit" class="btn btn-primary">Update</button>
-        </div>
+            <button type="submit" class="btn btn-primary ml-4">Update</button>
     {!! Form::close() !!}
 @stop
                 

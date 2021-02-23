@@ -51,9 +51,21 @@ class JabatanController extends Controller
     {
         $this->validate($request, [
             'name' => 'required',
-            'gaji_pokok' => 'required',
         ]);
+
+        $value = $request->get('gaji_pokok');
+        $gajiPokok = str_replace("Rp ","",$value);
+        $gajiPokok = str_replace(".","",$gajiPokok);
+        $gajiPokok = (int)$gajiPokok;
+
+        $values = $request->get('bonus_profesional');
+        $bonus = str_replace("Rp ","",$values);
+        $bonus = str_replace(".","",$bonus);
+        $bonus = (int)$bonus;
+
         $input = $request->all();
+        $input['gaji_pokok'] = $gajiPokok;
+        $input['bonus_profesional'] = $bonus;
         jabatan::create($input);
 
         return redirect()->route('jabatan.index')->with('success','Berhasil menambah jabatan');
@@ -90,18 +102,26 @@ class JabatanController extends Controller
      * @param  \App\Models\permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, jabatan $jabatan)
     {
         request()->validate([
             'name' => 'required',
-            'gaji_pokok' => 'required',
         ]);
-        
-        $jabatan = Jabatan::find($id);
-        $jabatan->name = $request->input('name');
-        $jabatan->gaji_pokok = $request->input('gaji_pokok');
-        $jabatan->bonus_profesional = $request->input('bonus_profesional');
-        $jabatan->save();
+
+        $value = $request->get('gaji_pokok');
+        $gajiPokok = str_replace("Rp ","",$value);
+        $gajiPokok = str_replace(".","",$gajiPokok);
+        $gajiPokok = (int)$gajiPokok;
+
+        $values = $request->get('bonus_profesional');
+        $bonus = str_replace("Rp ","",$values);
+        $bonus = str_replace(".","",$bonus);
+        $bonus = (int)$bonus;
+
+        $input = $request->all();
+        $input['gaji_pokok'] = $gajiPokok;
+        $input['bonus_profesional'] = $bonus;
+        $jabatan->update($input);
     
         return redirect()->route('jabatan.index')
                         ->with('success','Berhasil update jabatan');

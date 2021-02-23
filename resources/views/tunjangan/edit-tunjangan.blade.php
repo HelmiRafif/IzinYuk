@@ -18,7 +18,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group pt-3">
                 <label for="nominal">Nominal Tunjangan</label>
-                {!! Form::text('besar_tunjangan', null, array('placeholder' => 'Nominal Tunjangan','class' => 'form-control','id' => 'nominal')) !!}
+                {!! Form::text('besar_tunjangan', null, array('placeholder' => 'Nominal Tunjangan','class' => 'form-control text-right price','style' => 'width: 300px')) !!}
             </div>
         </div>
         <!-- /.card-body -->

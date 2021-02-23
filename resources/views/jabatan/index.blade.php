@@ -38,14 +38,15 @@
                             <tr>
                             <td class="align-middle">{{ ++$i }}</td>
                             <td class="align-middle">{{ $row->name }}</td>
-                            <td class="align-middle">{{ $row->gaji_pokok}}</td>
-                            <td>
-                                @if(empty($row->bonus_profesional))
+                            <td class="align-middle text-right">{{ number_format($row->gaji_pokok,0,",",".") }}</td>
+                            <td class="align-middle text-right">
+                                @if($row->bonus_profesional == 0)
                                     Tidak ada
+                                    @else
+                                    {{ number_format($row->bonus_profesional,0,",",".") }}</td>
                                 @endif
-                            {{ $row->bonus_profesional}}</td>
                             <td>
-                                <a class="btn btn-primary" href="{{ route('jabatan.show',$row->id) }}"><i class="fa fa-info"></i></a>
+                                <a class="btn btn-primary m-2" href="{{ route('jabatan.show',$row->id) }}"><i class="fa fa-info"></i></a>
                                 @can('jabatan-edit')
                                     <a class="btn btn-warning text-white" href="{{ route('jabatan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                                 @endcan

@@ -18,7 +18,7 @@
 
             <div class="form-group">
                 <label for="besarPotongan">Besar Potongan</label>
-                {!! Form::text('besar_potongan', null, array('placeholder' => 'Besar Potongan','class' => 'form-control','id' => 'besarPotongan')) !!}
+                {!! Form::text('besar_potongan', null, array('placeholder' => 'Besar Potongan','class' => 'form-control price','style' => 'width: 300px')) !!}
             </div>            
         </div>
         <!-- /.card-body -->

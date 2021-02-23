@@ -17,7 +17,7 @@
 
             <div class="form-group pt-3">
                 <label for="nominal">Besar Nominal</label>
-                {!! Form::text('besar_tunjangan', null, array('placeholder' => 'Besar Nominal','class' => 'form-control','id' => 'nominal')) !!}
+                {!! Form::text('besar_tunjangan', null, array('placeholder' => 'Besar Nominal','class' => 'form-control text-right price','style' => 'width: 300px')) !!}
                 </select>
             </div>
         </div>

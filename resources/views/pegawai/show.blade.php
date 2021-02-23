@@ -35,19 +35,28 @@
                     <th>Tanggal Masuk</th>
                     <td>:</td>
                     <td>
-                        @if(!empty($row->tanggal_masuk))
+                        @if(!empty($pegawai->tanggal_masuk))
                         {{ $pegawai->tanggal_masuk }}
                             @else
                             Sedang tidak melakukan izin
                         @endif
                     </td>
                 </tr>
+                @if(!empty($pegawai->jabatan_id))
+                    <tr>
+                        <th>
+                        Jabatan
+                        </th>
+                        <td>:</td>
+                        <td>{{ $pegawai->jabatanName($pegawai->jabatan_id) }}</td>
+                    </tr>
+                @endif
             </tbody>
             <tfoot>
                 <tr>
                     <td>
                         <span>
-                            <a class="btn btn-warning text-white" href="{{ route('pegawai.edit',Auth::user()->id) }}"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-warning text-white" href="{{ route('pegawai.biodata') }}"><i class="fa fa-edit"></i></a>
                         </span>
                     </td>
                     <td>

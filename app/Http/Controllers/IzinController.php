@@ -139,7 +139,6 @@ class IzinController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate([
-            'type_izin' => 'required',
             'tanggal_mulai' => 'required',
             'tanggal_selesai' => 'required',
             'keterangan' => 'required',

@@ -27,6 +27,7 @@
         "tailwindcss": "^2.0.2"
     },
     "dependencies": {
+        "jquery-price-format": "git+https://github.com/flaviosilveira/Jquery-Price-Format.git",
         "sweetalert2": "^10.15.4"
     }
 }

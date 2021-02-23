@@ -52,7 +52,12 @@ class PotonganController extends Controller
             'name' => 'required',
             'besar_potongan' => 'required',
         ]);
+        $value = $request->get('besar_potongan');
+        $potongan = str_replace("Rp ","",$value);
+        $potongan = str_replace(".","",$potongan);
+        $potongan = (int)$potongan;
         $input = $request->all();
+        $input['besar_potongan'] = $potongan;
         potongan::create($input);
 
         return redirect()->route('potongan.index')->with('success','Berhasil menambah potongan');
@@ -89,17 +94,19 @@ class PotonganController extends Controller
      * @param  \App\Models\permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, potongan $potongans)
     {
         request()->validate([
             'name' => 'required',
-            'besar_potongan' => 'required',
         ]);
         
-        $potongan = potongan::find($id);
-        $potongan->name = $request->input('name');
-        $potongan->besar_potongan = $request->input('besar_potongan');    
-        $potongan->save();
+        $value = $request->get('besar_potongan');
+        $potongan = str_replace("Rp ","",$value);
+        $potongan = str_replace(".","",$potongan);
+        $potongan = (int)$potongan;
+        $input = $request->all();
+        $input['besar_potongan'] = $potongan;
+        $potongans->update($input);
     
         return redirect()->route('potongan.index')
                         ->with('success','Berhasil update potongan');

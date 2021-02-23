@@ -57,7 +57,13 @@ class TunjanganController extends Controller
             'besar_tunjangan' => 'required',
         ]);
 
-        tunjangan::create(['name' => $request->input('name'), 'besar_tunjangan' => $request->input('besar_tunjangan')]);
+        $value = $request->get('besar_tunjangan');
+        $tunjangan = str_replace("Rp ","",$value);
+        $tunjangan = str_replace(".","",$tunjangan);
+        $tunjangan = (int)$tunjangan;
+
+
+        tunjangan::create(['name' => $request->input('name'), 'besar_tunjangan' => $tunjangan]);
         return redirect()->route('tunjangan.index')->with('success','tunjangan created successfully');
     }
 
@@ -91,14 +97,19 @@ class TunjanganController extends Controller
      * @param  \App\Models\tunjangan  $tunjangan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, tunjangan $tunjangan)
+    public function update(Request $request, tunjangan $tunjangans)
     {
         request()->validate([
             'name' => 'required',
-            'guard_name' => 'required',
         ]);
     
-        $tunjangan->update($request->all());
+        $value = $request->get('besar_tunjangan');
+        $tunjangan = str_replace("Rp ","",$value);
+        $tunjangan = str_replace(".","",$tunjangan);
+        $tunjangan = (int)$tunjangan;
+        $input = $request->all();
+        $input['besar_tunjangan'] = $tunjangan;
+        $tunjangans->update($input);
     
         return redirect()->route('tunjangan.index')
                         ->with('success','tunjangan updated successfully');

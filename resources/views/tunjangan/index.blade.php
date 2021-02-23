@@ -17,10 +17,12 @@
                     <table class="table table-hover text-nowrap" id="table">
                     <thead class="text-center">
                         <tr>
-                        <th>ID</th>
+                        <th>#</th>
                         <th>Nama</th>
-                        <th>Besar Nominal Tunjangan</th>
+                        <th>Besar Tunjangan</th>
+                        @can('tunjangan-edit','tunjangan-delete')
                         <th>Action</th>
+                        @endcan
                         </tr>
                     </thead>
                     <tbody class="text-center">
@@ -28,12 +30,12 @@
                         <tr>
                         <td class="align-middle">{{ $row->id }}</td>
                         <td class="align-middle">{{ $row->name }}</td>
-                        <td class="align-middle">{{ $row->besar_tunjangan}}</td>
+                        <td class="align-middle text-right">{{ number_format($row->besar_tunjangan,0,",",".") }}</td>
                         <td>
-                            @can('permission-edit')
-                                <a class="btn btn-primary text-white" href="{{ route('tunjangan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
+                            @can('tunjangan-edit')
+                                <a class="btn btn-warning text-white" href="{{ route('tunjangan.edit',$row->id) }}"><i class="fa fa-edit"></i></a>
                             @endcan
-                            @can('permission-delete')
+                            @can('tunjangan-delete')
                                 {!! Form::open(['method' => 'DELETE','route' => ['tunjangan.destroy', $row->id],'style'=>'display:inline']) !!}
                                     <button type="submit" class="btn btn-sm-2 btn-secondary m-2" title="Hapus">
                                         <i class="fa fa-trash"></i>

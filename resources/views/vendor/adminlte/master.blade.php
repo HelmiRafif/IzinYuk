@@ -102,7 +102,8 @@
     @endif
 
     {{-- Custom Scripts --}}
-    @yield('adminlte_js')  
+    @yield('adminlte_js')
+    <script src="{{ asset('js/jquery.priceformat.min.js') }}"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script type="text/javascript">
 
@@ -110,7 +111,7 @@
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 3500,
+            timer: 3000,
             timerProgressBar: true
         })
 
@@ -137,6 +138,13 @@
             })
         }
         @endif
+
+
+        $('.price').priceFormat({
+            prefix: 'Rp ',
+            thousandsSeparator: '.',
+            centsLimit: 0
+        });
     </script>
 
 </body>
