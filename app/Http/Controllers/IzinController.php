@@ -102,7 +102,7 @@ class IzinController extends Controller
         // $pid = Table::select('id')->where('pegawais',$id)->get();
         // izin::create(['type_izin' => $request->input('type_izin'), 'tanggal_mulai' => $request->input('tanggal_mulai'), 'tanggal_selesai' => $request->input('tanggal_selesai'), 'keterangan' => $request->input('keterangan')]);
         
-        return redirect()->route('izin.index')->with('success','Berhasil membuat perizinan');
+        return redirect()->route('izin.detail')->with('success','Berhasil membuat perizinan');
     }
 
     /**
@@ -114,7 +114,7 @@ class IzinController extends Controller
     public function show($id)
     {
         $izin = izin::find($id);
-        return view('izin.show',compact('izin'));
+        return view('izin.detail',compact('izin'));
     }
 
     /**
