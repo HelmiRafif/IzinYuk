@@ -4,19 +4,6 @@
 
 @section('content_header')
     <h1>Edit Data Pegawai</h1>
-
-    @if (count($errors) > 0)
-        <div class="alert alert-danger alert-dismissible">
-            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-            <h5><i class="icon fas fa-ban"></i> Alert!</h5>
-            <strong>Whoops!</strong> There were some problems with your input.<br><br>
-            <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-            </ul>
-        </div>
-    @endif
 @stop
 
 @section('content')
@@ -109,7 +96,6 @@
                                 <br>
                                 <label>{{ Form::checkbox('tunjangan_id[]', $value->id, in_array($value->id, $tunjangan_pegawai) ? true : false, array('class' => 'name')) }}
                                 {{ $value->name }}</label>
-                                <br/>
                             @endforeach
                         </div>
                     </div>
@@ -119,7 +105,7 @@
         @endcan
         <!-- /.card-body -->
 
-            <button type="submit" class="btn btn-primary ml-4">Update</button>
+            <button type="submit" class="btn btn-primary ml-4 mb-5">Update</button>
     {!! Form::close() !!}
 @stop
                 

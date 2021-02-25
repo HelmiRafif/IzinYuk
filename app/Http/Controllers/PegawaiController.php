@@ -47,10 +47,14 @@ class PegawaiController extends Controller
     public function biodata()
     {
         $id = Auth::user()->id;
-        $jabatan = jabatan::get();
+        $jabatan = jabatan::select('id','name')->get()->pluck('name','id')->toArray();
         $pegawai = pegawai::find($id);
+        $tunjangan = tunjangan::get();
+        $tunjangan_pegawai = DB::table("tunjangan_pegawais")->where("pegawai_id", $id)
+                        ->pluck('tunjangan_pegawais.tunjangan_id','tunjangan_pegawais.tunjangan_id')
+                        ->all();
         // $jabatan = jabatan::find($id);
-        return view('pegawai.edit-pegawai',compact('pegawai','jabatan'));
+        return view('pegawai.edit-pegawai',compact('pegawai','jabatan','tunjangan','tunjangan_pegawai'));
     }
     
     /**
@@ -141,7 +145,7 @@ class PegawaiController extends Controller
         $pegawai = pegawai::find($id);
         $tunjangan = tunjangan::get();
         $tunjangan_pegawai = DB::table("tunjangan_pegawais")->where("pegawai_id", $id)
-                        ->pluck('tunjangan_pegawais.tunjangan_id','tunjangan_pegawais.tunjangan_id')
+                        ->pluck('tunjangan_id','tunjangan_id')
                         ->all();
         return view('pegawai.edit-pegawai',compact('pegawai','jabatan','tunjangan','tunjangan_pegawai'));
     }
