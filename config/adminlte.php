@@ -255,7 +255,6 @@ return [
             ],
             ],
         ],
-        ['header' => 'account_settings'],
         [
             'text' => 'Manage User',
             'icon' => 'fas fa-fw fa-user',
@@ -281,7 +280,7 @@ return [
         [
             'text' => 'Kepegawaian',
             'icon' => 'fas fa-fw fa-table',
-            'can' => ['pegawai-list','pegawai-biodata','jabatan-list','tunjangan-list','potongan-list','pegawai-biodata'],
+            'can' => ['pegawai-list','pegawai-biodata','jabatan-list','pegawai-biodata'],
             'submenu' => [
                 [
                 'text' => 'Pegawai',
@@ -298,6 +297,18 @@ return [
                 'route' => 'jabatan.index',
                 'can' => 'jabatan-list'
             ],
+            ],
+        ],
+        [
+            'text' => 'Keuangan',
+            'icon' => 'fas fa-fw fa-money-bill-wave',
+            'can' => ['gaji-list','tunjangan-list','potongan-list'],
+            'submenu' => [
+                [
+                'text' => 'Gaji',
+                'route' => 'gaji.index',
+                'can' => 'gaji-list'
+            ],
             [
                 'text' => 'Tunjangan',
                 'route' => 'tunjangan.index',
@@ -309,7 +320,7 @@ return [
                 'can' => 'potongan-list'
             ],
             ],
-        ],       
+        ],      
     ],
 
     /*

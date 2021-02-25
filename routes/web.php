@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
@@ -12,6 +11,7 @@ use App\Http\Controllers\TunjanganController;
 use App\Http\Controllers\PotonganController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\IzinController;
+use App\Http\Controllers\GajiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/izin/detail','App\Http\Controllers\IzinController@detail')->name('izin.detail');
     Route::get('/izin/modify', 'App\Http\Controllers\IzinController@modify')->name('izin.modify');
     Route::resource('izin',IzinController::class);
+    Route::resource('izin',GajiController::class);
 
     Route::patch('izin/{id}/setujui','App\Http\Controllers\IzinController@admit')->name('izin.admit');
     // Route::resource('dashboard',DashboardController::class);

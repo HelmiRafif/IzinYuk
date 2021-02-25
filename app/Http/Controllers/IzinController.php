@@ -149,7 +149,11 @@ class IzinController extends Controller
         $izin->tanggal_mulai = $request->input('tanggal_mulai');
         $izin->tanggal_selesai = $request->input('tanggal_selesai');
         $izin->keterangan = $request->input('keterangan');
-        $izin->status_diterima = $request->input('status_diterima');
+        if (empty($request->input('status_diterima'))) {
+            $izin->status_diterima = 'Menunggu konfirmasi';
+        }else {
+            $izin->status_diterima = $request->input('status_diterima');
+        }
         $izin->save();
     
         return redirect()->route('izin.index')

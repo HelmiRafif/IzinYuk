@@ -24,7 +24,7 @@ class CreatePegawaisTable extends Migration
             $table->string('type_pegawai')->nullable($value = true);
             $table->string('bank')->nullable($value = true);
             $table->unsignedBigInteger('jabatan_id')->nullable();
-            $table->unsignedBigInteger('bonus_loyalitas')->nullable($value = true);
+            $table->integer('bonus_loyalitas')->nullable($value = true);
             $table->timestamps();
 
             $table->foreign('jabatan_id')

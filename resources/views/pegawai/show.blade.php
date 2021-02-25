@@ -32,6 +32,16 @@
                     <td>{{ $pegawai->alamat }}</td>
                 </tr>
                 <tr>
+                    <th>Bank</th>
+                    <td>:</td>
+                    <td>{{ $pegawai->bank }}</td>
+                </tr>
+                <tr>
+                    <th>Rekening</th>
+                    <td>:</td>
+                    <td>{{ $pegawai->rekening }}</td>
+                </tr>
+                <tr>
                     <th>Tanggal Masuk</th>
                     <td>:</td>
                     <td>

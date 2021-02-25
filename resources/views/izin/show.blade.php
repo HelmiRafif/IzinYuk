@@ -42,7 +42,7 @@
             <thead class="text-center">
                 <tr>
                 <th>#</th>
-                <th>ID User</th>
+                <th>Username</th>
                 <th>Tipe Izin</th>
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
@@ -54,7 +54,7 @@
                 @foreach ($izin as $i=>$row)
                     <tr>
                     <td class="align-middle">{{ ++$i }}</td>
-                    <td class="align-middle">{{ $row->user_id }}</td>
+                    <td class="align-middle">{{ $row->username($row->user_id) }}</td>
                     <td class="align-middle">{{ $row->type_izin }}</td>
                     <td class="align-middle">{{ $row->tanggal_mulai }}</td>
                     <td class="align-middle">{{ $row->tanggal_selesai }}</td>

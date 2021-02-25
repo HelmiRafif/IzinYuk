@@ -8,6 +8,8 @@ use App\Models\pegawai;
 use App\Models\jabatan;
 use Illuminate\Support\Facades\Auth;
 use App\Models\permission;
+use App\Models\tunjangan;
+use App\Models\tunjanganPegawai;
 use DB;
 
 class PegawaiController extends Controller
@@ -17,7 +19,7 @@ class PegawaiController extends Controller
         $this->middleware('permission:pegawai-list|pegawai-create|pegawai-edit|pegawai-delete', ['only' => ['index','store']]);
         $this->middleware('permission:pegawai-create', ['only' => ['create','store']]);
         $this->middleware('permission:pegawai-edit', ['only' => ['edit']]);
-        $this->middleware('permission:pegawai-biodata|pegawai-edit', ['only' => ['biodata','list','update']]);
+        $this->middleware('permission:pegawai-biodata|pegawai-edit|pegawai-tunjangan', ['only' => ['biodata','list','update']]);
         $this->middleware('permission:pegawai-delete', ['only' => ['destroy']]);
     }
 
@@ -45,8 +47,9 @@ class PegawaiController extends Controller
     public function biodata()
     {
         $id = Auth::user()->id;
+        $jabatan = jabatan::get();
         $pegawai = pegawai::find($id);
-        $jabatan = jabatan::find($id);
+        // $jabatan = jabatan::find($id);
         return view('pegawai.edit-pegawai',compact('pegawai','jabatan'));
     }
     
@@ -128,12 +131,19 @@ class PegawaiController extends Controller
      * @param  \App\Models\permission  $permission
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id) //Tambah if else supaya Admin bisa update jabatan user
     {
-        $jabatan = jabatan::get();
-        $id = Auth::user()->id;
+        // $jabatan = jabatan::select(['id','name'])->get()->keyBy('id');
+        // $jabatan = collect([null => 'Tidak ada']+jabatan::select('id','name')->get()->pluck('name','id')->toArray());
+        $jabatan = jabatan::select('id','name')->get()->pluck('name','id')->toArray();
+        // $jabatan = jabatan::pluck()->keyBy('id')->toArray();
+        // [1=>"programmer", 2=>""];
         $pegawai = pegawai::find($id);
-        return view('pegawai.edit-pegawai',compact('pegawai','jabatan'));
+        $tunjangan = tunjangan::get();
+        $tunjangan_pegawai = DB::table("tunjangan_pegawais")->where("pegawai_id", $id)
+                        ->pluck('tunjangan_pegawais.tunjangan_id','tunjangan_pegawais.tunjangan_id')
+                        ->all();
+        return view('pegawai.edit-pegawai',compact('pegawai','jabatan','tunjangan','tunjangan_pegawai'));
     }
 
     /**
@@ -162,9 +172,35 @@ class PegawaiController extends Controller
         $pegawai->jabatan_id = $request->input('jabatan_id');
         $pegawai->type_pegawai = $request->input('type_pegawai');
         $pegawai->save();
-    
-        return redirect()->route('pegawai.data')
+
+        $input = $request->all();
+        // dd($input);
+        if(isset($input['tunjangan_id'])) {
+            DB::table('tunjangan_pegawais')->where('pegawai_id',$id)->delete();
+
+            // foreach ($input['tunjangan_id'] as $tunjangan) {
+            //     $tunjangans = tunjanganPegawai::create([
+            //         'pegawai_id' => $id,
+            //         'tunjangan_id' => $tunjangan
+            //     ]);
+            // }
+            
+            foreach ($input['tunjangan_id'] as $tunjangan) {
+            $input = new tunjanganPegawai([
+                'pegawai_id' => $id,
+                'tunjangan_id' => $tunjangan
+                ]);
+            }
+            $input->save();
+        }
+
+        if (Auth::user()->id != $id) {
+            return redirect()->route('pegawai.index')
                         ->with('success','Berhasil update pegawai');
+        }else {
+            return redirect()->route('pegawai.data')
+                        ->with('success','Berhasil update pegawai');
+        }
     }
 
     /**

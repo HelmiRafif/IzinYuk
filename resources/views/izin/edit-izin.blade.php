@@ -14,14 +14,15 @@
         <div class="card-body">
             <div class="form-group pb-3">
                 <label for="exampleSelectRounded0">Tipe Izin</label>
-                <select class="custom-select rounded-0" id="exampleSelectRounded0" value={{$izin['type_izin']}} name="type_izin">
+                {!! Form::select('type_izin', ['izin' => 'Izin', 'sakit' => 'Sakit', 'terlambat' => 'Terlambat'], $izin->type_izin, array('class' => 'form-control')) !!}
+                {{-- <select class="custom-select rounded-0" id="exampleSelectRounded0" value={{$izin['type_izin']}} name="type_izin"> --}}
                         {{-- @if (!empty($izin['type_perizinan']))
                             <option value={{ $value['type_izin'] }}>{{ $value['name'] }}</option>
                         @endif --}}
                     {{-- <option selected disabled style="display:none">Tipe Perizinan</option> --}}
-                    <option Value="Izin">Izin</option>
+                    {{-- <option Value="Izin">Izin</option>
                     <option Value="Sakit">Sakit</option>
-                    <option Value="Terlambat">Terlambat</option>
+                    <option Value="Terlambat">Terlambat</option> --}}
                 </select>
             </div>
 
@@ -54,9 +55,7 @@
         </div>
         <!-- /.card-body -->
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Update</button>
-        </div>
+            <button type="submit" class="btn btn-primary ml-3">Update</button>
     {!! Form::close() !!}
 @stop
                 

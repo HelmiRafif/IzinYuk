@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\jabatan;
 use App\Models\pegawai;
 use Illuminate\Database\Seeder;
 use App\Models\User;
@@ -34,7 +35,8 @@ class UserSeeder extends Seeder
         $pegawai = pegawai::create([
             'id' => $user->id,
             'nama' => $user->name,
-            'email' => $user->email
+            'email' => $user->email,
+            'jabatan_id' => 1
         ]);
 
         // $hasrole = Role::pluck('id','id')->all();

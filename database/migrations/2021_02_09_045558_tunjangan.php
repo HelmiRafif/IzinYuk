@@ -14,7 +14,7 @@ class Tunjangan extends Migration
     public function up()
     {
         Schema::create('tunjangans', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->string('name');
             $table->integer('besar_tunjangan');
             $table->timestamps();

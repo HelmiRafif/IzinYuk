@@ -47,10 +47,7 @@
             </div>
         </div>
         <!-- /.card-body -->
-
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+            <button type="submit" class="btn btn-primary ml-3 mb-4">Submit</button>
     {!! Form::close() !!}
 @stop
                 

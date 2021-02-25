@@ -8,7 +8,7 @@
 @stop
 
 @section('content')
-    <div class="card">
+    <div class="card w-75">
         <table class="table">
             <tbody>
                 <tr>
@@ -36,22 +36,32 @@
                     <td>:</td>
                     <td>{{ $izin->keterangan }}</td>
                 </tr>
-            </tbody>
-            <tfoot>
                 <tr>
+                    <th>Status</th>
+                    <td>:</td>
                     <td>
-                        <span>
-                            <a class="btn btn-warning text-white" href="{{ route('izin.edit',$izin) }}"><i class="fa fa-edit"></i></a>
-                        </span>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
+                        @if($izin->status_diterima == 'Menunggu konfirmasi')
+                            <label class="badge badge-warning p-2">Menunggu konfirmasi</label>
+                            @elseif($izin->status_diterima == 'Ditolak')
+                            <label class="badge badge-danger p-2">{{ $izin->status_diterima }}</label><br>
+                            @else
+                            <label class="badge badge-success p-2">{{ $izin->status_diterima }}</label>
+                        @endif
                     </td>
                 </tr>
-            </tfoot>
+                @if($izin->status_diterima == 'Diterima'||'Ditolak')
+                    <tr>
+                        <th>Pada</th>
+                        <td>:</td>
+                        <td>
+                            {{ $izin->updated_at }}
+                        </td>
+                    </tr>
+                @endif
+            </tbody>
         </table>
     </div>
+    <a class="btn btn-warning text-white ml-3" title="Edit" href="{{ route('izin.edit',$izin) }}"><i class="fa fa-edit"></i></a>
 @stop
 
 @section('css')

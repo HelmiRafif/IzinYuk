@@ -6,9 +6,6 @@
     <div class="pull-left">
         <h2>Ajukan Perizinan</h2>
     </div>
-    <div class="pull-right">
-        <a class="btn btn-primary" href="{{ route('izin.index') }}"> Back</a>
-    </div>
 @stop
 
 @section('content')
@@ -52,9 +49,7 @@
         </div>
         <!-- /.card-body -->
 
-        <div class="card-footer">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
+            <button type="submit" class="btn btn-primary ml-3">Submit</button>
     {!! Form::close() !!}
 @stop
                 
