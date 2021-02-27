@@ -9,12 +9,13 @@ use App\Models\pegawai;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use App\Libraries\OpenTBS;
 
 class IzinController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:izin-list|izin-create|izin-edit|izin-delete', ['only' => ['index','store']]);
+        $this->middleware('permission:izin-list|izin-create|izin-edit|izin-delete', ['only' => ['index','store','laporan']]);
         $this->middleware('permission:izin-create', ['only' => ['create','store']]);
         $this->middleware('permission:izin-edit', ['only' => ['edit','update']]);
         $this->middleware('permission:izin-admit', ['only' => ['admit']]);
@@ -45,12 +46,15 @@ class IzinController extends Controller
     public function create(Request $request)
     {
         $id = Auth::user()->id;
-        $date = izin::select()->where('user_id',$id)->where('status_diterima','!=','Ditolak')->get();
+        $date = izin::select()->where('user_id',$id)
+            ->where('status_diterima','!=','Ditolak')
+            ->where('status_diterima','!=','Terlambat')
+            ->get();
         // $rejected = izin::where('status_diterima','Ditolak')->count();
         $quota = 6;
 
         if ($date->count() >= $quota) {
-            return redirect()->route('izin.detail')->with('warning','Anda telah menggunakan seluruh jatah cuti');
+            return redirect()->route('izin.detail')->with('warning','Anda telah mengambil seluruh jatah cuti tahun ini');
         }
         
         
@@ -189,5 +193,53 @@ class IzinController extends Controller
 
         return redirect()->route('izin.index')
                         ->with('success','Berhasil hapus data izin');
+    }
+
+    public function laporan(Request $request)
+    {
+        // $this->validate($request, [            
+        //     'tanggal' => 'required'
+        // ]);
+
+        $izin = izin::query()
+            ->select('pegawais.nama','izins.type_izin',
+            DB::raw('COUNT(type_izin) as jumlah_izin'))
+            ->groupBy('nama','type_izin')
+            ->join('pegawais', 'pegawais.id', '=', 'user_id')
+            ->get();
+
+            $izin = izin::where('pegawai_id','=','')
+            
+
+            $d = [];
+            $a = [];
+
+            $d['date'] = $request->input('tanggal');
+
+            foreach ($izin as $izins) {
+                $a[] = [
+                    'pegawai' => $izins['nama'],
+                    'tipe_izin' => $izins['type_izin']
+                ];
+                // if ($a['tipe_izin' == 'Terlambat']) {
+                //     $d['terlambat_count'] = count($izins['type_izin']);
+                // }
+
+                dd($a);
+            }
+            // dd($a);
+
+            // $d['terlambat'] = count($izins['type_izin']);
+            // dd($d['terlambat']);
+            // $d['count_terlambat'] = count($izin['']);
+            // dd($d);
+
+
+        $path = asset('laporan/template_izin.xlsx');
+        $tbs = OpenTBS::loadTemplate($path);
+        $tbs->mergeBlock('a', $a);
+        $tbs->mergeField('d', $d);
+        $filename = sprintf('Data Laporan Izin');
+        $tbs->download("{$filename}.xlsx");
     }
 }
