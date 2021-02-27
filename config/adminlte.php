@@ -306,7 +306,7 @@ return [
             'submenu' => [
                 [
                 'text' => 'Gaji',
-                'route' => 'gaji.index',
+                'route' => 'gaji.create',
                 'can' => 'gaji-list'
             ],
             [
@@ -314,11 +314,11 @@ return [
                 'route' => 'tunjangan.index',
                 'can' => 'tunjangan-list'
             ],
-            [
-                'text' => 'Potongan',
-                'route' => 'potongan.index',
-                'can' => 'potongan-list'
-            ],
+            // [
+            //     'text' => 'Potongan',
+            //     'route' => 'potongan.index',
+            //     'can' => 'potongan-list'
+            // ],
             ],
         ],      
     ],

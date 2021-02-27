@@ -15,11 +15,11 @@
                 <div class="col-12">
                     <div class="card">
                     <div class="card-header">
-                        <h5>Data Perizinan Karyawan</h5>
+                        {{-- <h5>Data Perizinan Karyawan</h5> --}}
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table id="example2" class="table table-bordered table-hover">
+                        {{-- <table id="example2" class="table table-bordered table-hover">
                         <thead class="text-center">
                         <tr>
                             <th>#</th>
@@ -66,8 +66,8 @@
                                 </td>
                                 </tr>
                             @endforeach --}}
-                        </tbody>
-                        </table>
+                        {{-- </tbody>
+                        </table> --}} 
                     </div>
                     <!-- /.card-body -->
                     </div>

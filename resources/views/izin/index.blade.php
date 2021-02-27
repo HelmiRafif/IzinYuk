@@ -4,12 +4,19 @@
 
 @section('content_header')
     <h1>Data Perizinan</h1>    
-
+        <div class="button-group">
+            <a href="<?= route('izin.laporan') ?>" class="btn btn-app float-right">
+                <i class="fa fa-save"></i>Laporan
+            </a>
+        </div>
 @stop
 
 @section('content')
     <div class="row mx-auto px-2">
         <div class="col-12">
+        {{-- {!! Form::open(array('route' => 'izin.index','method'=>'POST')) !!}
+            <h5>Filter Bulan : <input type="month" class="mb-3"></h5>
+        {!! Form::close() !!} --}}
             <div class="card ">
                 <div class="card-body table-responsive">
                     <table class="table table-hover text-nowrap" id="table">
@@ -28,7 +35,7 @@
                         @foreach ($izin as $row)
                             <tr>
                             <td class="align-middle">{{ ++$i }}</td>
-                            <td class="align-middle">{{ $row->user_id }}</td>
+                            <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle">{{ $row->type_izin }}</td>
                             <td class="align-middle">{{ $row->tanggal_mulai }}</td>
                             <td class="align-middle">{{ $row->tanggal_selesai }}</td>
@@ -75,7 +82,6 @@
                         @endforeach
                     </tbody>
                     </table>
-                    {!! $izin->render() !!}
                 </div>
                 <!-- /.card-body -->
             </div>

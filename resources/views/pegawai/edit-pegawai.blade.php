@@ -30,6 +30,12 @@
                 <label for="alamat">Alamat</label>
                 {!! Form::text('alamat', null, array('placeholder' => 'Alamat','class' => 'form-control','id' => 'alamat')) !!}
             </div>
+            <div class="col-sm">
+                    <div class="form-group">
+                    <label>Tanggal Masuk</label>
+                        {!! Form::date('tanggal_masuk', $pegawai->tanggal_masuk,array('class' => 'form-control')) !!}
+                    </div>
+                </div>
             <div class="row">
                 <div class="col-sm">
                     <div class="form-group">

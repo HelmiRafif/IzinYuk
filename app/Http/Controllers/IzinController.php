@@ -6,28 +6,35 @@ use Illuminate\Http\Request;
 use Doctrine\DBAL\Schema\Table;
 use App\Models\izin;
 use App\Models\pegawai;
+use App\Exports\IzinExport;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Libraries\OpenTBS;
+use Maatwebsite\Excel\Facades\Excel;
 
 class IzinController extends Controller
 {
     function __construct()
     {
-        $this->middleware('permission:izin-list|izin-create|izin-edit|izin-delete', ['only' => ['index','store','laporan']]);
+        $this->middleware('permission:izin-list|izin-create|izin-edit|izin-delete', ['only' => ['index','store']]);
         $this->middleware('permission:izin-create', ['only' => ['create','store']]);
         $this->middleware('permission:izin-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:izin-admit', ['only' => ['admit']]);
+        $this->middleware('permission:izin-admit', ['only' => ['admit','laporan']]);
         $this->middleware('permission:izin-detail', ['only' => ['detail']]);
         $this->middleware('permission:izin-delete', ['only' => ['destroy']]);
     }
 
     public function index(Request $request)
     {
-        $izin = Izin::orderBy('id','DESC')->paginate();
-        return view('izin.index',compact('izin'))
-            ->with('i', ($request->input('page', 1) - 1) * 5);
+        // $izin = Izin::orderBy('id','DESC')->paginate();
+        // return view('izin.index',compact('izin'))
+        //     ->with('i', ($request->input('page', 1) - 1) * 5);
+
+        $izin = izin::select('izins.id','tanggal_mulai','tanggal_selesai','status_diterima','nama','type_izin')
+                ->join('pegawais','izins.user_id','=','pegawais.id')
+                ->get();
+                return view('izin.index',compact('izin'))->with('i');
     }
     
     /**
@@ -195,51 +202,95 @@ class IzinController extends Controller
                         ->with('success','Berhasil hapus data izin');
     }
 
-    public function laporan(Request $request)
+    // 
+
+    public function laporan()
     {
-        // $this->validate($request, [            
-        //     'tanggal' => 'required'
-        // ]);
+    //  $customer_data = DB::table('tbl_customer')->get()->toArray();
+    //  $customer_array[] = array('Customer Name', 'Address', 'City', 'Postal Code', 'Country');
+    //  foreach($customer_data as $customer)
+    //  {
+    //   $customer_array[] = array(
+    //    'Customer Name'  => $customer->CustomerName,
+    //    'Address'   => $customer->Address,
+    //    'City'    => $customer->City,
+    //    'Postal Code'  => $customer->PostalCode,
+    //    'Country'   => $customer->Country
+    //   );
+    //  }
 
-        $izin = izin::query()
-            ->select('pegawais.nama','izins.type_izin',
-            DB::raw('COUNT(type_izin) as jumlah_izin'))
-            ->groupBy('nama','type_izin')
-            ->join('pegawais', 'pegawais.id', '=', 'user_id')
-            ->get();
+    $pegawai = Pegawai::select('pegawais.id','nama')
+                -> join('izins','pegawais.id','=','pegawais.id')
+                -> groupBy('pegawais.id','nama')
+                -> get();
 
-            $izin = izin::where('pegawai_id','=','')
-            
+    // $d = [];
+    $a = [];
+    // $d['date'] = $request->input('id');
 
-            $d = [];
-            $a = [];
+    foreach($pegawai as $value) {
+        $izin = Izin::where('user_id','=',$value->id)
+                    -> where('type_izin','=',"izin")
+                    ->count();
+        $sakit = Izin::where('user_id','=',$value->id)
+                    -> where('type_izin','=',"sakit")
+                    ->count();
+        $terlambat = Izin::where('user_id','=',$value->id)
+                    -> where('type_izin','=',"terlambat")
+                    ->count();
 
-            $d['date'] = $request->input('tanggal');
-
-            foreach ($izin as $izins) {
-                $a[] = [
-                    'pegawai' => $izins['nama'],
-                    'tipe_izin' => $izins['type_izin']
-                ];
-                // if ($a['tipe_izin' == 'Terlambat']) {
-                //     $d['terlambat_count'] = count($izins['type_izin']);
-                // }
-
-                dd($a);
-            }
-            // dd($a);
-
-            // $d['terlambat'] = count($izins['type_izin']);
-            // dd($d['terlambat']);
-            // $d['count_terlambat'] = count($izin['']);
-            // dd($d);
-
-
-        $path = asset('laporan/template_izin.xlsx');
-        $tbs = OpenTBS::loadTemplate($path);
-        $tbs->mergeBlock('a', $a);
-        $tbs->mergeField('d', $d);
-        $filename = sprintf('Data Laporan Izin');
-        $tbs->download("{$filename}.xlsx");
+        $a[] = [
+            'nama' => $value['nama'],  
+            'izin' => $izin,
+            'sakit' => $sakit,
+            'terlambat' => $terlambat,
+        ];
     }
+    $export = new IzinExport($a);
+
+    return Excel::download($export, 'laporan_Izin.xlsx');
+    }
+
+    // public function laporan()
+    // {
+    //     // $this->validate($request, [
+    //     //     'tanggal' => 'required',
+    //     // ]);
+
+    //     $pegawai = Pegawai::select('pegawai_id','nama')
+    //             -> join('izin','pegawai.id','=','pegawai_id')
+    //             -> groupBy('pegawai_id','nama')
+    //             -> get();
+
+    //     // $d = [];
+    //     $a = [];
+    //     // $d['date'] = $request->input('id');
+
+    //     foreach($pegawai as $value) {
+    //         $izin = Izin::where('pegawai_id','=',$value->pegawai_id)
+    //                     -> where('type_izin','=',"izin")
+    //                     ->count();
+    //         $sakit = Izin::where('pegawai_id','=',$value->pegawai_id)
+    //                     -> where('type_izin','=',"sakit")
+    //                     ->count();
+    //         $terlambat = Izin::where('pegawai_id','=',$value->pegawai_id)
+    //                     -> where('type_izin','=',"terlambat")
+    //                     ->count();
+
+    //         $a[] = [
+    //             'nama' => $value['nama'],  
+    //             'izin' => $izin,
+    //             'sakit' => $sakit,
+    //             'terlambat' => $terlambat,
+    //         ];
+    //     }
+    //     // dd($a);
+
+    //     $path = asset('laporan/template_izin.xlsx');
+    //     $tbs = OpenTBS::loadTemplate($path);
+    //     $tbs->mergeBlock('a', $a);
+    //     // $tbs->mergeField('d', $d);
+    //     $filename = sprintf('Rekap Izin');
+    //     $tbs->download("{$filename}.xlsx");
+    // }
 }

@@ -7,14 +7,16 @@
 @stop
 
 @section('content')
+@can('tunjangan-create')
     <a href="<?= route('tunjangan.create') ?>" class="btn btn-app float-right">
         <i class="fas fa-edit"></i> Tambah
     </a>
+@endcan
     <div class="row">
         <div class="col-12">
             <div class="card">                            
                 <div class="card-body table-responsive">
-                    <table class="table table-hover text-nowrap" id="table">
+                    <table class="table text-nowrap">
                     <thead class="text-center">
                         <tr>
                         <th>#</th>

@@ -11,6 +11,9 @@ use App\Models\tunjangan;
 use App\Models\potongan;
 use DB;
 use Illuminate\Support\Carbon;
+use App\Libraries\OpenTBS;
+use Illuminate\Support\Facades\Auth;
+use App\Models\detailTunjangan;
 
 class GajiController extends Controller
 {
@@ -24,21 +27,40 @@ class GajiController extends Controller
 
     public function index(Request $request)
     {
-        $gaji = gaji::select('gajis.id as id','nama','gaji_pokok','period','bonus_loyalitas','total_tunjangan',
-                        DB::raw('gaji_pokok + total_tunjangan + bonus_loyalitas as total_gaji'))
+        $pegawai_id = Auth::user()->id;
+        $gaji = gaji::select('gajis.id as id','nama','gaji_pokok','period','gajis.bonus_loyalitas','total_tunjangan',
+                        DB::raw('gaji_pokok + total_tunjangan + gajis.bonus_loyalitas as total_gaji'))
                         ->join('pegawais', 'gajis.pegawai_id', '=', 'pegawais.id')
-                        ->get();
+                        ->where('pegawai_id', '=', $pegawai_id)
+                        ->orderBy('period','desc')
+                        ->first();
 
-        return view('gaji.index');
-        //     ->with('i', ($request->input('page', 1) - 1) * 5);
+                if (isset($gaji->id)) {
+                    $tunjangan = tunjangan::select('name', 'detail_tunjangan.besar_tunjangan')
+                    ->join('detail_tunjangan', 'tunjangans.id', '=', 'tunjangan_id')
+                    ->where('gaji_id', '=', $gaji->id)
+                    ->get();
+                }
+
+                if (empty($gaji)) {
+                    return view('gaji.index');
+                }else {
+                    return view('gaji.index', compact('gaji','tunjangan'));
+                }
+
+        // return view('gaji.index');
+        //     ->with('i', ($request->input('page', 1) - 1) * 5);e
     }
 
     public function create()
     {
-        $gaji = gaji::select('gajis.id as id','nama','gaji_pokok','period','bonus','total_tunjangan',
-                        DB::raw('gaji_pokok + total_tunjangan + bonus as total_gaji'))
+        $gaji = gaji::select('gajis.id as id','nama','gaji_pokok','period','gajis.bonus_loyalitas','total_tunjangan',
+                        DB::raw('gaji_pokok + total_tunjangan + gajis.bonus_loyalitas as total_gaji'))
                         ->join('pegawais', 'gajis.pegawai_id', '=', 'pegawais.id')
+                        ->orderBy('period','DESC')
                         ->get();
+
+                        // dd($gaji);
 
                     // $gaji->total_gaji = $gaji->gaji_pokok + $gaji->total_tunjangan;
         // $gajiId = gaji::orderBy('id','DESC');
@@ -51,21 +73,61 @@ class GajiController extends Controller
             'period' => 'required'
         ]);
 
+        $gaji =gaji::get();
         $now = date('m', strtotime($request->input('period')));
         DB::table('gajis')->whereMonth('period', '=', $now)->delete();
 
-        $gaji = pegawai::select('pegawais.id as pegawai_id','gaji_pokok','bonus_loyalitas',
+        $gaji = pegawai::select('pegawais.id as pegawai_id','gaji_pokok','bonus_profesional', 'tanggal_masuk',
                     DB::raw('SUM(besar_tunjangan) as total_tunjangan'))
                     ->join('tunjangan_pegawais','pegawais.id', '=', 'tunjangan_pegawais.pegawai_id')
                     ->leftJoin('tunjangans','tunjangan_pegawais.tunjangan_id', '=', 'tunjangans.id')
                     ->join('jabatans','pegawais.jabatan_id', '=', 'jabatans.id')
-                    ->groupBy('pegawais.id','gaji_pokok','bonus_loyalitas')
+                    ->groupBy('pegawais.id','gaji_pokok','bonus_profesional','tanggal_masuk')
                     ->get()->toArray();
+
+                    // dd($gaji);
 
                 foreach ($gaji as $input) {
                     $input['period'] = $request->input('period');
                     // dd($input);
-                    gaji::create($input);
+                    
+                    $interval = abs(strtotime(Carbon::today()) - strtotime($input['tanggal_masuk']));
+                    $masa_kerja = floor($interval / (365*60*60*24));
+                    // dd($masa_kerja);
+                    $input['bonus_loyalitas'] = $masa_kerja * $input['bonus_profesional'];
+                    // dd($input['bonus_loyalitas']);
+                    // dd($input);
+                    $generate = gaji::create($input);
+                    $pegawai = pegawai::where('id', '=', $input['pegawai_id'])->first();
+                    $pegawai->bonus_loyalitas = $input['bonus_loyalitas'];
+                    $pegawai->save();
+
+                    $tunjangan = tunjangan::select('tunjangan_id','besar_tunjangan','pegawai_id')
+                                    ->join('tunjangan_pegawais','tunjangans.id','=','tunjangan_id')
+                                    ->where('pegawai_id', '=', $generate->pegawai_id)
+                                    ->get();
+
+
+                    foreach ($tunjangan as $detail) {
+                        // dd($detail);
+                        // detailTunjangan::create([
+                        //     'gaji_id' => $generate->id,
+                        //     'pegawai_id' => $detail->pegawai_id,
+                        //     'tanggal' => $generate->period,
+                        //     'tunjangan_id' => $detail->tunjangan_id,
+                        //     'besar_tunjangan' => $detail->besar_tunjangan
+                        // ]);
+                        // dd(gettype($detail->besar_tunjangan));
+                        $detailTunjangan = new detailTunjangan([
+                            'gaji_id' => $generate->id,
+                            'pegawai_id' => $detail->pegawai_id,
+                            'tanggal' => $generate->period,
+                            'tunjangan_id' => $detail->tunjangan_id,
+                            'besar_tunjangan' => $detail->besar_tunjangan
+                        ]);
+                        // dd($detailTunjangan);
+                        $detailTunjangan->save();
+                    }
                 }
 
                     // gaji::create();
@@ -77,11 +139,28 @@ class GajiController extends Controller
         // return redirect()->route('gaji.index')->with('success','Role created successfully');
     }
 
-    public function show($id)
+    public function show()
     {
-        
-    
-        return view('gaji.add-gaji',compact('gaji'));
+        $pegawai_id = Auth::user()->id;
+        $gaji = gaji::select('gajis.id as id','nama','gaji_pokok','period','gajis.bonus_loyalitas','total_tunjangan',
+                        DB::raw('gaji_pokok + total_tunjangan + gajis.bonus_loyalitas as total_gaji'))
+                        ->join('pegawais', 'gajis.pegawai_id', '=', 'pegawais.id')
+                        ->where('pegawai_id', '=', $pegawai_id)
+                        ->orderBy('period','desc')
+                        ->first();
+
+                if (isset($gaji->id)) {
+                    $tunjangan = tunjangan::select('name', 'detail_tunjangan.besar_tunjangan')
+                    ->join('detail_tunjangan', 'tunjangans.id', '=', 'tunjangan_id')
+                    ->where('gaji_id', '=', $gaji->id)
+                    ->get();
+                }
+
+                if (empty($gaji)) {
+                    return view('gaji.show');
+                }else {
+                    return view('gaji.show', compact('gaji','tunjangan'));
+                }
     }
 
     public function update(Request $request, $id)

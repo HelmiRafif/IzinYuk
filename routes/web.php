@@ -40,7 +40,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/pegawai/data','App\Http\Controllers\PegawaiController@list')->name('pegawai.data');
     Route::resource('pegawai',PegawaiController::class);
     Route::get('/izin/detail','App\Http\Controllers\IzinController@detail')->name('izin.detail');
-    Route::get('/izin/modify', 'App\Http\Controllers\IzinController@modify')->name('izin.modify');
+    // Route::get('/izin/modify', 'App\Http\Controllers\IzinController@modify')->name('izin.modify');
+    Route::get('/izin/laporan', 'App\Http\Controllers\IzinController@laporan')->name('izin.laporan');
     Route::resource('izin',IzinController::class);
     Route::resource('gaji',GajiController::class);
 

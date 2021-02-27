@@ -26,8 +26,11 @@ class PegawaiController extends Controller
     public function index(Request $request)
     {
         $pegawai = Pegawai::orderBy('id','ASC')->paginate();
+        // dd($pegawai);
         return view('pegawai.index',compact('pegawai'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
+
+
     }
 
     public function list()
@@ -64,8 +67,8 @@ class PegawaiController extends Controller
      */
     public function create(Request $request)
     {
-        $jabatan = jabatan::get()->toArray();
-        return view('pegawai.add-pegawai', compact('jabatan'));
+        // $jabatan = jabatan::get()->toArray();
+        // return view('pegawai.add-pegawai', compact('jabatan'));
     }
 
     /**
@@ -96,6 +99,8 @@ class PegawaiController extends Controller
             // 'session_id' => $session_id->get()
             ]);
         $data['id'] = Auth::user()->id;
+
+        
 
         $data->save();
 
@@ -165,6 +170,7 @@ class PegawaiController extends Controller
             'alamat' => 'required',
             'rekening' => 'required',
             'bank' => 'required',
+            'tanggal_masuk' => 'required'
         ]);
 
         $pegawai = pegawai::find($id);
@@ -175,7 +181,7 @@ class PegawaiController extends Controller
         $pegawai->bank = $request->input('bank');
         $pegawai->jabatan_id = $request->input('jabatan_id');
         $pegawai->type_pegawai = $request->input('type_pegawai');
-        $pegawai->save();
+        $pegawai->tanggal_masuk = $request->input('tanggal_masuk');
 
         $input = $request->all();
         // dd($input);
@@ -194,9 +200,19 @@ class PegawaiController extends Controller
                 'pegawai_id' => $id,
                 'tunjangan_id' => $tunjangan
                 ]);
+                $input->save();
             }
-            $input->save();
         }
+
+        // $bonus = jabatan::select('id','bonus_profesional')->get()->pluck('bonus_profesional','id')->toArray();
+        // dd($bonus);
+        // if ($pegawai->jabatan_id == $bonus['id']) {
+        //     // $pegawai->bonus_loyalitas = $value;
+        //     $pegawai->bonus_loyalitas = $request->get($bonus->bonus_profesional);
+        //     dd($pegawai->bonus_loyalitas);
+        // }
+
+        $pegawai->save();
 
         if (Auth::user()->id != $id) {
             return redirect()->route('pegawai.index')
@@ -220,5 +236,6 @@ class PegawaiController extends Controller
         return redirect()->route('pegawai.index')
                         ->with('success','Berhasil hapus pegawai');
     }
+
 }
 

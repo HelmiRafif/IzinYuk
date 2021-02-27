@@ -3,23 +3,20 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Generator Gaji</h1>    
-
+    <div class="float-right mb-2">
+            {!! Form::open(array('route' => 'gaji.store','method'=>'POST')) !!}
+                {{ Form::date('period', \Carbon\Carbon::now()) }}
+                <button type="submit" class="btn btn-primary"><i class="fa fa-money-bill"></i> Generate</button>
+            {!! Form::close() !!}
+        </div>
+    <h1 class="">Generator Gaji</h1>
 @stop
 
 @section('content')
     <div class="row mx-auto px-2">
-        <div class="col-md-6">
-        {!! Form::open(array('route' => 'gaji.store','method'=>'POST')) !!}
-            <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-money-bill"></i> Generate</button>
-            {{ Form::date('period', \Carbon\Carbon::now()) }}
-        {!! Form::close() !!}
-        </div>
-    </div>
-
         <div class="row">
         <div class="col-12">
-            <div class="card ">
+            <div class="card">
                 <div class="card-body table-responsive">
                     <table class="table table-hover text-nowrap" id="table">
                     <thead class="text-center">
@@ -43,7 +40,7 @@
                             <td class="align-middle">{{ $row->nama }}</td>
                             <td class="align-middle text-right">{{ number_format($row->gaji_pokok,0,",",".") }}</td>
                             <td class="align-middle text-right">{{ number_format($row->total_tunjangan,0,",",".") }}</td>
-                            <td class="align-middle text-right">{{ number_format($row->bonus_profesional,0,",",".") }}</td>
+                            <td class="align-middle text-right">{{ number_format($row->bonus_loyalitas,0,",",".") }}</td>
                             <td class="align-middle text-right">{{ number_format($row->total_gaji,0,",",".") }}</td>
                             <td class="align-middle">{{ $row->period }}</td>
                             @can('gaji-list')

@@ -9,5 +9,5 @@ class gaji extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['pegawai_id','gaji_pokok','total_tunjangan','bonus','period'];
+    protected $fillable = ['pegawai_id','gaji_pokok','total_tunjangan','bonus_loyalitas','period'];
 }

@@ -63,9 +63,9 @@ class PermissionTableSeeder extends Seeder
         }
 
         $role = role::create(['name' => 'Production']);
-        $role->GivePermissionTo(17,21,29,31,32,35);
+        $role->GivePermissionTo(17,21,29,31,32,35,36);
 
         $role = role::create(['name' => 'Sales']);
-        $role->GivePermissionTo(17,21,29,31,32,35);
+        $role->GivePermissionTo(17,21,29,31,32,35,36);
     }
 }

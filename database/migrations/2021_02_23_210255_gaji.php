@@ -19,7 +19,7 @@ class Gaji extends Migration
             $table->unsignedBigInteger('pegawai_id');
             $table->integer('gaji_pokok')->nullable();
             $table->integer('total_tunjangan')->nullable();
-            $table->integer('bonus')->nullable();
+            $table->integer('bonus')->default(0);
             $table->date('period');
             $table->timestamps();
 
@@ -36,8 +36,22 @@ class Gaji extends Migration
             //     ->on('potongans')
             //     ->onDelete('SET NULL');
         });
-    }
 
+        Schema::create('detail_tunjangan', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('gaji_id');
+            $table->unsignedBigInteger('pegawai_id');
+            $table->unsignedBigInteger('tunjangan_id');
+            $table->date('tanggal');
+            $table->integer('besar_tunjangan');
+            $table->timestamps();
+
+            $table->foreign('gaji_id')
+                ->references('id')
+                ->on('gajis')
+                ->onDelete('cascade');
+        });
+    }
     /**
      * Reverse the migrations.
      *
@@ -47,4 +61,5 @@ class Gaji extends Migration
     {
         Schema::dropIfExists('gajis');
     }
+
 }

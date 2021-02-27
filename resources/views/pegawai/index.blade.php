@@ -8,11 +8,6 @@
 @stop
 
 @section('content')
-    @can('pegawai-create')        
-        <a href="<?= route('pegawai.create') ?>" class="btn btn-app float-right">
-            <i class="fas fa-edit"></i> Tambah
-        </a>
-    @endcan
     <div class="row">
         <div class="col-12">
             <div class="card ">        
@@ -42,11 +37,12 @@
                         <td class="align-middle">{{ $row->email}}</td>
                         <td class="align-middle">{{ $row->alamat}}</td>
                         <td class="align-middle">
-                            @if (!empty($row->tanggal_masuk))
+                            {{ $row->tanggal_masuk }}
+                            {{-- @if (!empty($row->tanggal_masuk))
                             {{ $pegawai->tanggal_masuk }}
                                 @else
                                 -
-                            @endif
+                            @endif --}}
                         </td>
                         <td class="align-middle">{{ $row->rekening}}</td>
                         <td class="align-middle">{{ $row->type_pegawai}}</td>
@@ -59,11 +55,7 @@
                             @endif
                         </td>
                         <td class="align-middle">
-                            @if($row->jabatanBonus($row->jabatan_id) == 0) 
-                                -
-                                @elseif(!empty($row->jabatanBonus($row->jabatan_id)))
-                                {{ $row->jabatanBonus($row->jabatan_id)}}
-                            @endif
+                                {{ $row->bonus_loyalitas }}
                         </td>
                         {{-- <td>{{ $row->jabatanBonus($row->bonus_loyalitas) }}</td> --}}
                         <td class="align-middle">
